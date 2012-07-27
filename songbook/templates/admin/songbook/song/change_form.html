@@ -1,8 +1,0 @@
-{% extends "admin/change_form.html" %}
-
-{% block form_top %}
-{% if upload_data %}
-    {% load filetransfers %}
-    {% render_upload_data upload_data %}
-{% endif %}
-{% endblock %}
