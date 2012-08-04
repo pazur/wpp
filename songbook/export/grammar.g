@@ -36,8 +36,8 @@ parser Lyrics:
     rule group_lst:   group group_lst       {{ return [group] + group_lst}}
                     |                       {{ return [] }}
 
-    rule group:   VERSE                     {{ return VERSE.value }}
-                | pipe_lst PIPETEXT         {{ return songtree.Group(pipe_lst + [PIPETEXT.value]) }}
+    rule group:   VERSE                     {{ return VERSE }}
+                | pipe_lst PIPETEXT         {{ return songtree.Group(pipe_lst + [PIPETEXT]) }}
 
-    rule pipe_lst:    PIPE pipe_lst         {{ return [PIPE.value] + pipe_lst }}
+    rule pipe_lst:    PIPE pipe_lst         {{ return [PIPE] + pipe_lst }}
                     |                       {{ return [] }}
