@@ -8,9 +8,12 @@
             var labelNode = document.createElement('label');
             labelNode.appendChild(document.createTextNode('Preview:'));
             previewNode.appendChild(labelNode);
-            var textNode = document.createElement('pre');
+            var textNode = document.createElement('textarea');
             textNode.appendChild(document.createTextNode("{{ original.latex_preview|escape|escapejs }}"));
-            previewNode.appendChild(document.createElement('br'));
+            textNode.setAttribute('rows', 10);
+            textNode.setAttribute('cols', 40);
+            textNode.setAttribute('readonly', 'readonly');
+            textNode.setAttribute('class', 'vLargeTextField');
             previewNode.appendChild(textNode);
             root.appendChild(previewNode);
         }
