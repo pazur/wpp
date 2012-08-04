@@ -22,3 +22,6 @@ class Song(models.Model):
 
     def latex_preview(self):
         return Exporter(self).export_or_error()
+
+    def __unicode__(self):
+        return self.title
