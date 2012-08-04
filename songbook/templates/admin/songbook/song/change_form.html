@@ -1,0 +1,20 @@
+{% extends "admin/change_form.html" %}
+{% block extrahead %}{{ block.super }}
+{% if change %}
+    <script type="text/javascript">
+        function addPreview(){
+            var root = document.getElementsByClassName('form-row lyrics')[0];
+            var previewNode = document.createElement('div');
+            var labelNode = document.createElement('label');
+            labelNode.appendChild(document.createTextNode('Preview:'));
+            previewNode.appendChild(labelNode);
+            var textNode = document.createElement('pre');
+            textNode.appendChild(document.createTextNode("{{ original.latex_preview|escape|escapejs }}"));
+            previewNode.appendChild(document.createElement('br'));
+            previewNode.appendChild(textNode);
+            root.appendChild(previewNode);
+        }
+        window.onload = addPreview;
+    </script>
+{% endif %}
+{% endblock %}
