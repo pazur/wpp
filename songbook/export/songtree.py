@@ -1,3 +1,5 @@
+import re
+
 class Group(object):
     def __init__(self, verses):
         self.verses = verses
@@ -10,11 +12,27 @@ class Stanza(object):
         self.parts = parts
 
     def to_latex(self, context):
-        return '\\\\\n'.join(p.to_latex(context) for p in self.parts) + '\n\n'
+        return '\\\\\n'.join(p.to_latex(context) for p in self.parts)
 
 class Chorus(Stanza):
-    pass
+    def to_latex(self, context):
+        def set_chorus_first_verse(verse):
+            context['chorus_first_verse'] = verse
+            return verse
+        if self.parts:
+            context['verse']['first'].insert(0, set_chorus_first_verse)
+            return r'\flagverse{Ref.}' + super(Chorus, self).to_latex(context)
+        return r'\flagverse{Ref.}' + (context['chorus_first_verse'] or '') + '...'
 
 class Lyrics(object):
     def __init__(self, stanzas):
         self.stanzas = stanzas
+
+    def to_latex(self, context):
+        def first_words(verse):
+            return re.sub(r'^(.*?)(([\.\?!,:;]+)?)$', r'\\firstwords{\1}\2', verse)
+        context['verse']['first'].append(first_words)
+        context['verse']['longest'] = ''
+        lyrics = '\n\n'.join(s.to_latex(context) for s in self.stanzas)
+        pattern = '\\begin{lyrics}[longestline=%s]\n%s\n\\end{lyrics}'
+        return pattern % (context['verse']['longest'], lyrics)

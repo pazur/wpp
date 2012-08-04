@@ -9,7 +9,18 @@ class Lexem(object):
             self.chords = chords.strip()
 
         def to_latex(self, context):
-            return self.verse
+            result = self.verse
+            while context['verse']['first']:
+                transformation = context['verse']['first'].pop(0)
+                result = transformation(result)
+            for transformation in context['verse']['all']:
+                result = transformation(result)
+            if len(context['verse']['longest']) < len(self):
+                context['verse']['longest'] = self.verse
+            return result
+
+        def __len__(self):
+            return len(self.verse)
 
     class Pipe(Verse):
         type = 'PIPE'
