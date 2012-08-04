@@ -17,7 +17,7 @@ class Stanza(object):
 class Chorus(Stanza):
     def to_latex(self, context):
         def set_chorus_first_verse(verse):
-            context['chorus_first_verse'] = verse
+            context['chorus_first_verse'] = verse.strip(' .?!,:;')
             return verse
         if self.parts:
             context['verse']['first'].insert(0, set_chorus_first_verse)

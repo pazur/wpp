@@ -47,8 +47,8 @@ class Lexem(object):
 CHORDS_SEPARATOR = '$'
 PIPE = '|'
 TAGS = {
-    '<chorus>': Lexem.ChorusOpen,
-    '</chorus>': Lexem.ChorusClose,
+    '<ref>': Lexem.ChorusOpen,
+    '</ref>': Lexem.ChorusClose,
 }
 
 class Lexer(yapps.Scanner):

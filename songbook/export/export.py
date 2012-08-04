@@ -32,7 +32,7 @@ class Exporter(object):
     def get_info(self):
         if not self.song.info:
             return ''
-        return "\\begin{info}%s\\end{info}" % self.song.info
+        return "\n\\begin{info}%s\\end{info}" % self.song.info
 
     def get_lyrics(self):
         tree = self.parse_lyrics()
