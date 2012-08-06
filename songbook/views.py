@@ -1,1 +1,39 @@
-# Create your views here.
+from django.contrib.auth import decorators
+from django.views import generic
+
+from songbook import models
+
+
+class SongListView(generic.ListView):
+    model = models.Song
+
+class SongUpdateView(generic.UpdateView):
+    model = models.Song
+
+class SongCreateView(generic.CreateView):
+    model = models.Song
+
+class SongDetailView(generic.DetailView):
+    model = models.Song
+
+class AllSongsMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super(AllSongsMixin, self).get_context_data(**kwargs)
+        context['all_songs'] = models.Song.objects.all()
+        return context
+
+class SongbookUpdateView(AllSongsMixin, generic.UpdateView):
+    model = models.SongBook
+
+class SongbookCreateView(AllSongsMixin, generic.CreateView):
+    model = models.SongBook
+
+song_list_view = decorators.login_required(SongListView.as_view())
+song_update_view = decorators.login_required(SongUpdateView.as_view())
+song_create_view = decorators.login_required(SongCreateView.as_view())
+song_detail_view = decorators.login_required(SongDetailView.as_view())
+
+songbook_list_view = decorators.login_required(generic.ListView.as_view(model=models.SongBook))
+songbook_create_view = decorators.login_required(SongbookCreateView.as_view())
+songbook_update_view = decorators.login_required(SongbookUpdateView.as_view())
+songbook_detail_view = decorators.login_required(generic.DetailView.as_view(model=models.SongBook))
