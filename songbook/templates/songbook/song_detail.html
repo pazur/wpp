@@ -1,10 +1,31 @@
 {% extends 'base.html' %}
 {% block page_title %}{{ object.title }}{% endblock %}
 {% block content %}
+    {{ object.alt_title }}
     <div>
         <a href="{% url update_song pk=object.pk %}" class="button">Edytuj</a>
     </div>
     <div>
-        <p>{{ object.html_preview }}</p>
+        <div class='authors'>
+            <table>
+                <tr>
+                    <th>Słowa:</th>
+                    <td>
+                        {{ object.lyrics_author|default:'-' }}
+                        {% if object.lyrics_year %}({{ object.lyrics_year }}){% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Muzyka:</th>
+                    <td>
+                        {{ object.music_author|default:'-' }}
+                        {% if object.music_year %}({{ object.music_year }}){% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p class='info'>{{ object.info }}</p>
+        {{ object.html_preview|safe }}
+        <p class="comment"><span>Komentarz: </span>{{ object.comment }}</p>
     </div>
 {% endblock %}
