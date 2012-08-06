@@ -1,6 +1,8 @@
 from collections import defaultdict
 from yapps import runtime
 
+from django.utils.html import escape
+
 from songbook.export import grammar, lexer
 
 class Exporter(object):
@@ -51,3 +53,24 @@ class Exporter(object):
             return self.export()
         except runtime.SyntaxError as e:
             return 'LYRICS PARSE ERROR: %s' % e.msg
+
+class HtmlExporter(object):
+    def __init__(self, song):
+        self.song = song
+
+    def parse_lyrics(self):
+        parser = grammar.Lyrics(lexer.Lexer(self.song.lyrics))
+        return parser.entry()
+
+    def get_lyrics(self):
+        tree = self.parse_lyrics()
+        return tree.to_html({})
+
+    def export(self):
+        return self.get_lyrics()
+
+    def export_or_error(self):
+        try:
+            return self.export()
+        except runtime.SyntaxError as e:
+            return "<div class='error'>%s</div>" % escape('LYRICS PARSE ERROR: %s' % e.msg)

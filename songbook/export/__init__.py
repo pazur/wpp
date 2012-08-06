@@ -1,1 +1,1 @@
-from songbook.export.export import Exporter
+from songbook.export.export import Exporter, HtmlExporter

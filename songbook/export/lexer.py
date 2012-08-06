@@ -1,3 +1,5 @@
+from django.utils.html import escape
+
 import yapps.runtime as yapps
 
 class Lexem(object):
@@ -18,6 +20,9 @@ class Lexem(object):
             if len(context['verse']['longest']) < len(self):
                 context['verse']['longest'] = self.verse
             return result
+
+        def to_html(self, context):
+            return escape(self.verse)
 
         def __len__(self):
             return len(self.verse)

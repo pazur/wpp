@@ -7,12 +7,18 @@ class Group(object):
     def to_latex(self, context):
         return '\\\\\n'.join(v.to_latex(context) for v in self.verses)
 
+    def to_html(self, context):
+        return '</br>'.join(v.to_html(context) for v in self.verses)
+
 class Stanza(object):
     def __init__(self, parts):
         self.parts = parts
 
     def to_latex(self, context):
         return '\\\\\n'.join(p.to_latex(context) for p in self.parts)
+
+    def to_html(self, context):
+        return '<p>%s</p>' % ('</br>'.join(p.to_html(context) for p in self.parts))
 
 class Chorus(Stanza):
     def to_latex(self, context):
@@ -23,6 +29,9 @@ class Chorus(Stanza):
             context['verse']['first'].insert(0, set_chorus_first_verse)
             return r'\flagverse{Ref.}' + super(Chorus, self).to_latex(context)
         return r'\flagverse{Ref.}' + (context['chorus_first_verse'] or '') + '...'
+
+    def to_html(self, context):
+        return '<div class="chorus">%s</div>' % '</br>'.join(p.to_html(context) for p in self.parts)
 
 class Lyrics(object):
     def __init__(self, stanzas):
@@ -36,3 +45,6 @@ class Lyrics(object):
         lyrics = '\n\n'.join(s.to_latex(context) for s in self.stanzas)
         pattern = '\\begin{lyrics}[longestline=%s]\n%s\n\\end{lyrics}'
         return pattern % (context['verse']['longest'], lyrics)
+
+    def to_html(self, context):
+        return "\n".join(s.to_html(context) for s in self.stanzas)

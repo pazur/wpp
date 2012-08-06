@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
 
-from songbook.export import Exporter
+from songbook.export import Exporter, HtmlExporter
 from songbook import fields
 
 
@@ -27,7 +27,7 @@ class Song(models.Model):
         return Exporter(self).export_or_error()
 
     def html_preview(self):
-        return self.lyrics
+        return HtmlExporter(self).export_or_error()
 
     def __unicode__(self):
         return self.title
