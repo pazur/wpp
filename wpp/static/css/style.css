@@ -1,0 +1,46 @@
+#menu ul {
+    list-style-type: none;
+}
+#menu li {
+    float: left;
+}
+.clear {
+    clear: both;
+}
+
+#songbook-list, #library-list {
+    margin: 0;
+    width: 450px;
+    min-height: 100px;
+    padding-bottom: 50px;
+    overflow-y: scroll;
+    height: 400px;
+}
+#library-list {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+#songbook-list li, #library-list li {
+    margin: 0 3px 3px 3px;
+    padding: 0.4em;
+    padding-left: 1.5em;
+    font-size: 1.4em;
+    height: 18px;
+    width: 350px;
+    cursor: pointer;
+}
+.firstwords {
+    font-size: 0.7em;
+}
+#songbook-list li a {
+    float: right;
+}
+
+#library, #songbook {
+    float: left;
+}
+
+.sort {
+    cursor: pointer;
+}

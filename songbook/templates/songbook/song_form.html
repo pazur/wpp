@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block page_title %}{% if object %}{{ object.title }} - edycja{% else %}Dodaj piosenkę{% endif %}{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type='submit' value='Zapisz' class='button'>
+    </form>
+{% endblock %}

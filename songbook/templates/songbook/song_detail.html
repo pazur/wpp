@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block page_title %}{{ object.title }}{% endblock %}
+{% block content %}
+    <div>
+        <a href="{% url update_song pk=object.pk %}" class="button">Edytuj</a>
+    </div>
+    <div>
+        <p>{{ object.html_preview }}</p>
+    </div>
+{% endblock %}

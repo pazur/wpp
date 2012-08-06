@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <ul>
+        {% for object in object_list %}
+            <li><a href='{% url songbook pk=object.pk%}'>{{ object }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

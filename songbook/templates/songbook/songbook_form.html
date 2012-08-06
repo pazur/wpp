@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block extra-head %}
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/list.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}songbook.js"></script>
+{% endblock %}
+
+{% block page_title %}{% if object %}Edycja śpiewnika: {{ object.title }}{% else %}Dodaj śpiewnik{% endif %}{% endblock %}
+{% block content %}
+    <div class="content">
+        <form method="post" action="." id="songbook-form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div>
+                {{ form.title.errors }}
+                {{ form.title.label_tag }}: {{ form.title }}
+            </div>
+            {{ form.song_ids.as_hidden }}
+            {{ form.song_ids.errors }}
+            <div id="library">
+                <h2>Library:</h2>
+                <span class="sort ui-state-default ui-corner-all" data-sort="title">Sort by title</span>
+                <span class="sort ui-state-default ui-corner-all" data-sort="firstwords">Sort by firstwords</span>
+                <input class="search" data-columns='title'/>
+                <ul id="library-list" class="list">
+                    {% for song in all_songs %}
+                        <li class="ui-state-default" data-id='{{ song.pk }}'>
+                            <span class="title">{{ song.title }}</span>
+                            <span class="firstwords">First words {% if forloop.counter|divisibleby:"3" %}a{% endif %}{{ forloop.counter }}</span>
+                        </li>
+                    {%endfor%}
+                </ul>
+            </div>
+            <div id="songbook">
+                <h2>Songbook:</h2>
+                <ol id="songbook-list">
+                </ol>
+            </div>
+            <div class="clear"></div>
+            <input type='submit' value='Zapisz' class='button'>
+        </form>
+    </div>
+{% endblock %}

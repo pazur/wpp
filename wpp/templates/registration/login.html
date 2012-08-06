@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action="." method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        <table>
+        {{ form.as_table }}
+        </table>
+        <input type="submit" value="zaloguj">
+    </form>
+{% endblock %}
+{% block login_next %}/{% endblock %}

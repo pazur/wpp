@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block page_title %}Śpiewnik: {{ object.title }}{% endblock %}
+{% block content %}
+    <div>
+        <a href="{% url update_songbook pk=object.pk %}" class="button">Edytuj</a>
+    </div>
+    <div>
+
+    <ol>
+        {% for song in object.songs %}
+            <li><a href='{% url song pk=song.pk%}'>{{ song }}</a></li>
+        {% endfor %}
+    </ol>
+    </div>
+{% endblock %}

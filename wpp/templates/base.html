@@ -1,0 +1,35 @@
+<html>
+<head>
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/jqueryui/js/jquery-ui-1.8.22.custom.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}base.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}vendor/jqueryui/css/ui-lightness/jquery-ui-1.8.22.custom.css">
+    {% block extra-head %}
+    {% endblock %}
+</head>
+<body>
+<div id='menu'>
+    <ul>
+    {% if user.is_authenticated %}
+        <li><a href="{% url song_list %}" class="button">Piosenki</a></li>
+        <li><a href="{% url add_song %}" class="button">Dodaj piosenkę</a></li>
+        <li><a href="{% url songbook_list %}" class="button">Śpiewniki</a></li>
+        <li><a href="{% url add_songbook %}" class="button">Dodaj śpiewnik</a></li>
+        <li><a href="{% url logout %}" class="button">Wyloguj</a></li>
+    {% else %}
+        <li><a href="{% url login %}?next={% block login_next %}{{ request.path }}{% endblock %}" class='button'>Zaloguj</a></li>
+    {% endif %}
+    </ul>
+    <div class="clear"></div>
+</div>
+<div>
+    <h1>{% block page_title %}{% endblock %}</h1>
+    <div id="content_wrapper">
+    {% block content %}
+    {% endblock %}
+    </div>
+</div>
+</body>
+</html>
