@@ -20,3 +20,8 @@ indexes:
   properties:
   - name: __key__
     direction: desc
+
+- kind: songbook_songbook
+  properties:
+  - name: __key__
+    direction: desc
