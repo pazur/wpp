@@ -1,8 +1,13 @@
 #menu ul {
     list-style-type: none;
+    padding: 0px;
 }
 #menu li {
     float: left;
+    padding: 0px;
+}
+#menu {
+    width: 650px;
 }
 .clear {
     clear: both;
@@ -43,4 +48,37 @@
 
 .sort {
     cursor: pointer;
+}
+
+.chorus p:before {
+    content: "Ref.: ";
+}
+
+.chorus {
+    margin-left: 20px;
+}
+
+.authors th {
+    text-align: right;
+}
+
+.info {
+    font-style: italic;
+}
+
+.comment span {
+    font-weight: bold;
+}
+
+.comment {
+    padding-top: 50px;
+}
+
+#center {
+    width: 1000px;
+}
+
+#center, #menu {
+    margin-left: auto;
+    margin-right: auto;
 }
