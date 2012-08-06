@@ -1,6 +1,9 @@
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from songbook.export import Exporter
+from songbook import fields
+
 
 class Song(models.Model):
     def to_spreadsheet(self):
@@ -23,5 +26,29 @@ class Song(models.Model):
     def latex_preview(self):
         return Exporter(self).export_or_error()
 
+    def html_preview(self):
+        return self.lyrics
+
     def __unicode__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('song', kwargs={'pk': self.pk})
+
+    def __long__(self):
+        return long(self.pk)
+
+class SongBook(models.Model):
+    title = models.CharField(max_length=255)
+    song_ids = fields.SongListField(models.ForeignKey(Song))
+
+    def __unicode__(self):
+        return self.title
+
+    @property
+    def songs(self):
+        for id in self.song_ids:
+            yield Song.objects.get(id=id)
+
+    def get_absolute_url(self):
+        return reverse('songbook', kwargs={'pk': self.pk})
