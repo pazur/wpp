@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="{{ STATIC_URL }}vendor/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}vendor/jqueryui/js/jquery-ui-1.8.22.custom.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}base.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css">
@@ -24,7 +25,7 @@
     </ul>
     <div class="clear"></div>
 </div>
-<div>
+<div id="center">
     <h1>{% block page_title %}{% endblock %}</h1>
     <div id="content_wrapper">
     {% block content %}
