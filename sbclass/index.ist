@@ -1,0 +1,10 @@
+preamble "\\begin{theindex}"
+postamble "\\end{theindex}"
+
+delim_0 "\\dotfill"
+
+headings_flag 1
+heading_prefix "\\indexheader{"
+heading_suffix "}\\vspace{3pt}"
+
+
