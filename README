@@ -1,0 +1,10 @@
+* How to use gen.pl?
+
+1. Place sbclass and gen.pl on the server (don't forget about setting
+proper access rights).
+2. Set $DIRECTORY in gen.pl to path to sbclass.  
+3. Send POST request to gen.pl with tex param set to generated .tex file
+   (remember about escaping escaping it).
+
+   Ex.
+   curl --data "tex=`./escape.pl < escaped.tex`" http://.../gen.pl > out.pdf
