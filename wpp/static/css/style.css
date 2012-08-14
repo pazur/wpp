@@ -29,17 +29,18 @@
 #songbook-list li, #library-list li {
     margin: 0 3px 3px 3px;
     padding: 0.4em;
-    padding-left: 1.5em;
     font-size: 1.4em;
-    height: 18px;
     width: 350px;
     cursor: pointer;
 }
+
 .firstwords {
     font-size: 0.7em;
 }
-#songbook-list li a {
+#songbook-list li .delete-button {
     float: right;
+    position:relative;
+    top: -10px;
 }
 
 #library, #songbook {

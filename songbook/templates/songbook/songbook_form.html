@@ -24,7 +24,7 @@
                 <ul id="library-list" class="list">
                     {% for song in all_songs %}
                         <li class="ui-state-default" data-id='{{ song.pk }}'>
-                            <span class="title">{{ song.title }}</span>
+                            <span class="title">{{ song.title }}</span></br>
                             <span class="firstwords">First words {% if forloop.counter|divisibleby:"3" %}a{% endif %}{{ forloop.counter }}</span>
                         </li>
                     {%endfor%}

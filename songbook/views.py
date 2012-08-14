@@ -1,5 +1,7 @@
 from django.contrib.auth import decorators
+from django import http
 from django.views import generic
+from django.views.generic import detail
 
 from songbook import models
 
@@ -15,6 +17,14 @@ class SongCreateView(generic.CreateView):
 
 class SongDetailView(generic.DetailView):
     model = models.Song
+
+class SongLatexView(detail.SingleObjectMixin, generic.View):
+    model = models.Song
+
+    def get(self, request, *args, **kwargs):
+        object = self.get_object()
+        latex = object.latex_preview()
+        return http.HttpResponse(latex, mimetype='text/plain; charset=utf-8')
 
 class AllSongsMixin(object):
     def get_context_data(self, **kwargs):
@@ -32,6 +42,7 @@ song_list_view = decorators.login_required(SongListView.as_view())
 song_update_view = decorators.login_required(SongUpdateView.as_view())
 song_create_view = decorators.login_required(SongCreateView.as_view())
 song_detail_view = decorators.login_required(SongDetailView.as_view())
+song_latex_view = decorators.login_required(SongLatexView.as_view())
 
 songbook_list_view = decorators.login_required(generic.ListView.as_view(model=models.SongBook))
 songbook_create_view = decorators.login_required(SongbookCreateView.as_view())
