@@ -1,5 +1,7 @@
+from django.core import exceptions
 from django.core.urlresolvers import reverse
 from django.db import models
+from yapps import runtime
 
 from songbook.export import Exporter, HtmlExporter
 from songbook import fields
@@ -37,6 +39,13 @@ class Song(models.Model):
 
     def __long__(self):
         return long(self.pk)
+
+    def clean(self):
+        super(Song, self).clean()
+        try:
+            Exporter(self).export()
+        except runtime.SyntaxError:
+            raise exceptions.ValidationError('Lyrics source is not compiling')
 
 class SongBook(models.Model):
     title = models.CharField(max_length=255)
