@@ -1,8 +1,11 @@
 import hmac
+import urllib
+import urlparse
 
 from django.contrib.auth import decorators
 from django.conf import settings
 from django.core import exceptions
+from django.core.urlresolvers import reverse
 from django import http
 from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
@@ -46,11 +49,23 @@ class SongBookLatexHashView(LatexView):
     model = models.SongBook
 
     def post(self, request, *args, **kwargs):
-        hash = sefl.request.POST.get('hash', None)
-        expected = hmac.new(settings.LATEX_SECRET, request.build_absolute_uri())
+        hash = self.request.POST.get('hash', None)
+        expected = hmac.new(settings.LATEX_SECRET, request.build_absolute_uri()).hexdigest()
         if hash != expected:
             raise exceptions.PermissionDenied
         return self.get(request, *args, **kwargs)
+
+class SongbookDetailView(generic.DetailView):
+    model = models.SongBook
+
+    def get_context_data(self, **kwargs):
+        context = super(SongbookDetailView, self).get_context_data(**kwargs)
+        url = reverse('songbook_latex_hash', kwargs={'pk': self.object.pk})
+        absolute_url = "http://%s%s" % (self.request.get_host(), url)
+        hash = hmac.new(settings.LATEX_SECRET, absolute_url).hexdigest()
+        args = urllib.urlencode({'src': absolute_url, 'hash': hash})
+        context['pdf_url'] = "%s?%s" % (settings.LATEX_URL, args)
+        return context
 
 
 song_list_view = decorators.login_required(SongListView.as_view())
@@ -65,4 +80,4 @@ songbook_latex_hash_view = csrf_exempt(SongBookLatexHashView.as_view())
 songbook_list_view = decorators.login_required(generic.ListView.as_view(model=models.SongBook))
 songbook_create_view = decorators.login_required(SongbookCreateView.as_view())
 songbook_update_view = decorators.login_required(SongbookUpdateView.as_view())
-songbook_detail_view = decorators.login_required(generic.DetailView.as_view(model=models.SongBook))
+songbook_detail_view = decorators.login_required(SongbookDetailView.as_view())
