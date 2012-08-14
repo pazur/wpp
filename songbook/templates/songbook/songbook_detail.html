@@ -3,6 +3,7 @@
 {% block content %}
     <div>
         <a href="{% url update_songbook pk=object.pk %}" class="button">Edytuj</a>
+        <a href="{% url songbook_latex pk=object.pk %}" class="button">Latex</a>
     </div>
     <div>
 
