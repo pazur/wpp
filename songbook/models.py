@@ -50,6 +50,8 @@ class Song(models.Model):
 class SongBook(models.Model):
     title = models.CharField(max_length=255)
     song_ids = fields.SongListField(models.ForeignKey(Song))
+    author = models.CharField(max_length=255, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
         return self.title
