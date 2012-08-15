@@ -1,5 +1,8 @@
 import re
 
+from django.utils.html import escape
+
+
 class Group(object):
     def __init__(self, verses):
         self.verses = verses
@@ -8,7 +11,9 @@ class Group(object):
         return '\\\\\n'.join(v.to_latex(context) for v in self.verses)
 
     def to_html(self, context):
-        return '</br>'.join(v.to_html(context) for v in self.verses)
+        verses = '</br>'.join(v.to_html(context) for v in self.verses)
+        text = escape(self.verses[-1].text)
+        return '<span class="verse-group">%s</span><span>%s</span>' % (verses, text)
 
 class Stanza(object):
     def __init__(self, parts):
