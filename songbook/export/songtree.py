@@ -43,7 +43,7 @@ class Lyrics(object):
         context['verse']['first'].append(first_words)
         context['verse']['longest'] = ''
         lyrics = '\n\n'.join(s.to_latex(context) for s in self.stanzas)
-        pattern = '\\begin{lyrics}[longestline=%s]\n%s\n\\end{lyrics}'
+        pattern = '\\begin{lyrics}[longestline={%s}]\n%s\n\\end{lyrics}'
         return pattern % (context['verse']['longest'], lyrics)
 
     def to_html(self, context):

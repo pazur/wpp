@@ -28,7 +28,7 @@ class Exporter(object):
                 result[mapping[key]] = value
         if not result:
             return ''
-        return '[%s]' % ','.join('%s=%s' % item for item in result.iteritems())
+        return '[%s]' % ','.join('%s={%s}' % item for item in result.iteritems())
 
 
     def get_info(self):
@@ -46,7 +46,7 @@ class Exporter(object):
         title = self.song.title
         info = self.get_info()
         lyrics = self.get_lyrics()
-        return "\\song%s\n{%s}%s\n%s\n\n" % (params, title, info, lyrics)
+        return "\\song%s\n{%s}%s\n\n%s\n\n" % (params, title, info, lyrics)
 
     def export_or_error(self):
         try:
