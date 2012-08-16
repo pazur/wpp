@@ -1,3 +1,5 @@
+/* general */
+
 #menu ul {
     list-style-type: none;
     padding: 0px;
@@ -7,15 +9,62 @@
     padding: 0px;
 }
 #menu {
-    width: 650px;
+    width: 680px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
+
+#menu ul {
+    margin: 0px;
+}
+
+#center {
+    width: 680px;
+    padding: 10px;
+}
+
+.page-header {
+    text-align: center;
+}
+
 .clear {
     clear: both;
 }
 
+.songs-list li a {
+    color: #1C94C4;
+    text-decoration: none;
+}
+
+.songs-list li a:active {
+    color: #EB8F00;
+}
+
+.songs-list li a:hover {
+    color: #C77405;
+}
+
+.search {
+    border-radius: 4px;
+    border: 2px inset #cccccc;
+    height: 18px;
+}
+
+.search:focus {
+    border-color: #fbd850;
+    outline: none;
+}
+
+.sort {
+    cursor: pointer;
+    display: inline-block;
+    height: 22px;
+    padding: 3px 5px 4px 5px;
+}
+/* songbook edit */
 #songbook-list, #library-list {
     margin: 0;
-    width: 450px;
+    width: 320px;
     min-height: 100px;
     padding-bottom: 50px;
     overflow-y: scroll;
@@ -27,29 +76,28 @@
 }
 
 #songbook-list li, #library-list li {
-    margin: 0 3px 3px 3px;
-    padding: 0.4em;
-    font-size: 1.4em;
-    width: 350px;
+    margin: 3px 0px 3px 0px;
+    padding: 0.2em;
+    width: 280px;
     cursor: pointer;
+    font-weight: normal;
 }
 
-.firstwords {
-    font-size: 0.7em;
-}
-#songbook-list li .delete-button {
+#songbook-list li .delete-button, #library-list li .song-details-button {
     float: right;
-    position:relative;
-    top: -10px;
+    position: relative;
+    top: 4px;
 }
 
 #library, #songbook {
     float: left;
 }
 
-.sort {
-    cursor: pointer;
+.list-controls {
+    height: 30px;
 }
+
+/* song preview */
 
 .chorus p:before {
     content: "Ref.: ";
@@ -75,10 +123,6 @@
     padding-top: 50px;
 }
 
-#center {
-    width: 1000px;
-}
-
 #center, #menu {
     margin-left: auto;
     margin-right: auto;
@@ -89,4 +133,52 @@
     border-right: 1px solid black;
     padding-right: 30px;
     margin-right: 10px
+}
+
+/* song list */
+.list {
+    list-styl
+}
+
+/* song add */
+input, textarea {
+    border-radius: 4px;
+    border: 2px inset #cccccc;
+}
+
+input:focus, textarea:focus {
+    border-color: #fbd850;
+    outline: none;
+}
+
+.section-label {
+    display: block;
+    font-weight: bold;
+}
+
+label {
+    font-weight: 400;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+}
+
+input.save {
+    float: right;
+    margin-right: 20px;
+}
+
+textarea {
+    width: 670px;
+}
+
+#id_title, #id_alt_title {
+    width: 570px;
+}
+
+label[for="id_lyrics_year"], label[for="id_music_year"] {
+    width: 60px;
+    margin-left: 50px;
 }
