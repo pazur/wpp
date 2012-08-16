@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
+{% block extra-head %}
+    {{  block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/list.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}songlist.js"></script>
+{% endblock %}
 {% block page_title %}Lista piosenek{% endblock %}
 {% block content %}
-    <ul>
-        {% for object in object_list %}
-            <li><a href='{% url song pk=object.pk%}'>{{ object }}</a></li>
-        {% endfor %}
-    </ul>
+    <div id="songs" class="songs-list">
+        <span class="sort ui-state-default ui-corner-all" data-sort="title">Sortuj po tytule</span>
+        <input class="search" data-columns='title'/>
+        <ul class="list">
+            {% for object in object_list %}
+                <li><a href='{% url song pk=object.pk%}' class="title">{{ object }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
