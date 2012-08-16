@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block page_title %}{{ object.title }}{% endblock %}
 {% block content %}
-    {{ object.alt_title }}
+    <h4 class="ui-widget-content ui-corner-all page-header">{{ object.alt_title }}</h4>
     <div>
         <a href="{% url update_song pk=object.pk %}" class="button">Edytuj</a>
         <a href="{% url song_latex pk=object.pk %}" class="button">Latex</a>
