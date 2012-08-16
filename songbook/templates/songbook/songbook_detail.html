@@ -6,7 +6,7 @@
         <a href="{% url songbook_latex pk=object.pk %}" class="button">Latex</a>
         <a href="{{ pdf_url }}" class="button">Pdf</a>
     </div>
-    <div>
+    <div class="songs-list">
 
     <ol>
         {% for song in object.songs %}
