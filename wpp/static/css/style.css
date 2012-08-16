@@ -97,6 +97,10 @@
     height: 30px;
 }
 
+div.ui-datepicker{
+    font-size:12px;
+}
+
 /* song preview */
 
 .chorus p:before {

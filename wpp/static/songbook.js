@@ -84,6 +84,7 @@ $(function() {
         appendToSongbook(node);
     });
     $('.button').button();
+    $('#id_date').datepicker({dateFormat: 'dd.mm.yy'});
     initListJs();
 });
 
