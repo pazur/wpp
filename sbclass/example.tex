@@ -8,6 +8,8 @@
 
 \usepackage{layout} % DEBUGGING, TESTING
 \usepackage{lipsum} % DEBUGGING, TESTING
+\usepackage{tikz}
+\usetikzlibrary{matrix,decorations.pathreplacing,calc}
 
 \makeindex{fwidx}
 \makeindex{titidx}
@@ -15,9 +17,104 @@
 \title{Śpiewnik}
 \date{23 września 2012}
 \author{Magda \and Tomek \and Maciek}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
 \begin{document}
 \maketitle
 \setlipsumdefault{1}
+
+
+
+
+
+\begin{lyrics}
+  
+  Maciek \\
+  Maciek \\
+  Maciek \\
+  Maciek
+  
+  The first line. \\
+  \vin \flagverse{Ref.} The second line. \tikzmark{2nd} \\
+  A very long third line that goes on. \\
+  A fourth line. \\
+  And finally a last line. \tikzmark{4th}\\
+  maffa
+  \hspace{\versewidth}\tikzmark{righta}
+
+  The first line. \\
+  \flagverse{Ref.} The second line. \\
+  A very long third line that goes on. \\
+  \tikzmark{2nd}A fourth line. \\
+  And finally a last line. \tikzmark{4th}
+  \hspace{\versewidth}\tikzmark{rightb}
+  \begin{tikzpicture}[overlay, remember picture]
+    \draw [decoration={brace,amplitude=0.5em},decorate,gray]
+    ($(righta)!(2nd.north)!($(righta)-(0,1)$)$) -- node[black, right=0.7em] {x2}  ($(righta)!(4th.south)!($(righta)-(0,1)$)$);
+  \end{tikzpicture}
+
+  The first line. \\
+  \flagverse{Ref.} line. \\
+  A very long third \\
+  \tikzmark{m2nd}A fourth line. \\
+  And finally line. \tikzmark{m4th}
+  \hspace{\versewidth}\tikzmark{rightb}
+  \begin{tikzpicture}[overlay, remember picture]
+    \draw [decoration={brace,amplitude=0.5em},decorate,gray]
+    ($(righta)!(m2nd.north)!($(righta)-(0,1)$)$) -- node[black, right=0.7em] {x2}  ($(righta)!(m4th.south)!($(righta)-(0,1)$)$);
+  \end{tikzpicture}
+  
+  Maciek \\ 
+  Maciek \\
+  Maciek
+\end{lyrics}
+
+
+
+
+
+
+
+
+\begin{lyrics}[longestline={A very long third line that goes on.}]
+\begin{tikzpicture}
+  \matrix (m) [matrix of nodes,column 1/.style={anchor=west}]
+    {  
+    The first line. \\
+    The second line. \\
+    A very long third line that goes on. \\
+    A fourth line. \\
+    And finally a last line. \\
+    maffa \\
+    
+    \vspace{1in}
+    
+    The first line. \\
+    The second line. \\
+    A very long third line that goes on. \\
+    A fourth line. \\
+    And finally a last line. \\
+    };
+
+    \draw [decoration={brace,amplitude=0.7em},decorate,gray]
+        (m-2-1.north -| m.east) -- node[black, right=0.7em] {x2} (m-3-1.south -| m.east);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \matrix (m) [matrix of nodes,column 1/.style={anchor=west}]
+    {  
+    The first line. \\
+    The second line. \\
+    A very long third line that goes on. \\
+    A fourth line. \\
+    And finally a last line. \\
+    };
+
+    \draw [decoration={brace,amplitude=0.7em},decorate,gray]
+        (m-2-1.north -| m.east) -- node[black, right=0.7em] {x2} (m-3-1.south -| m.east);
+\end{tikzpicture}
+
+
+\end{lyrics}
 
 \song[alt=Pieśń Legionów Polskich we Włoszech,
       lyrics=Józef Wybicki,
