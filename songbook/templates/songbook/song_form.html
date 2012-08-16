@@ -1,13 +1,47 @@
 {% extends 'base.html' %}
 {% block page_title %}{% if object %}{{ object.title }} - edycja{% else %}Dodaj piosenkę{% endif %}{% endblock %}
 {% block content %}
-    <div>
+    <div class="content-wrapper">
         <form method="post" action=".">
             {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            <input type='submit' value='Zapisz' class='button'>
+            {{ form.non_field_errors }}
+            <div>
+                {{ form.title.errors }}
+                <label for="id_title">Tytuł:</label> {{ form.title }}
+            </div>
+            <div>
+                {{ form.alt_title.errors }}
+                <label for="id_alt_title">Podtytuł:</label> {{ form.alt_title }}
+            </div>
+            <div>
+                <span class="section-label">Słowa:</span>
+                {{ form.lyrics_author.errors }}{{ form.lyrics_year.errors }}
+                <label for="id_lyrics_author">Autor:</label> {{ form.lyrics_author }}
+                <label for="id_lyrics_year">Rok:</label> {{ form.lyrics_year }}
+            </div>
+            <div>
+                <span class="section-label">Muzyka:</span>
+                {{ form.music_author.errors }}{{ form.music_year.errors }}
+                <label for="id_music_author">Autor:</label> {{ form.music_author }}
+                <label for="id_music_year">Rok:</label> {{ form.music_year }}
+            </div>
+            <div>
+                {{ form.lyrics.errors }}
+                <label for="id_lyrics" class="section-label">Tekst:</label>
+                <textarea id="id_lyrics" rows="20" cols="80" name="lyrics"></textarea>
+            </div>
+            <div>
+                {{ form.info.errors }}
+                <label for="id_info" class="section-label">O piosence:</label>
+                <textarea id="id_info" rows="10" cols="80" name="info"></textarea>
+            </div>
+            <div>
+                {{ form.comment.errors }}
+                <label for="id_comment" class="section-label">Komentarz:</label>
+                <textarea id="id_comment" rows="10" cols="80" name="comment"></textarea>
+            </div>
+            <input type='submit' value='Zapisz' class='button save'>
+            <div class="clear"></div>
         </form>
     </div>
 {% endblock %}
