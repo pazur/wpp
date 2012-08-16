@@ -9,7 +9,7 @@
 \usepackage{layout} % DEBUGGING, TESTING
 \usepackage{lipsum} % DEBUGGING, TESTING
 \usepackage{tikz}
-\usetikzlibrary{matrix,decorations.pathreplacing,calc}
+
 
 \makeindex{fwidx}
 \makeindex{titidx}
@@ -17,7 +17,7 @@
 \title{Śpiewnik}
 \date{23 września 2012}
 \author{Magda \and Tomek \and Maciek}
-\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+
 \begin{document}
 \maketitle
 \setlipsumdefault{1}
@@ -139,11 +139,14 @@
     Co nam obca przemoc wzięła,\\
     Szablą odbierzemy.
 
+    
     \flagverse{Ref.}Marsz, marsz, Dąbrowski,\\
-    Z ziemi włoskiej do Polski.\\
-    Za twoim przewodem\\
-    Złączym się z narodem.
-
+    \begin{bis}%
+      Z ziemi włoskiej do Polski.\\
+      Za twoim przewodem\\
+      Złączym się z narodem.%
+    \end{bis}
+    
     Przejdziem Wisłę, przejdziem Wartę,\\
     Będziem Polakami.\\
     Dał nam przykład Bonaparte,\\

@@ -10,6 +10,8 @@
 \RequirePackage{multicol}
 \RequirePackage{ifmtarg}
 \RequirePackage{ifthen}
+\RequirePackage{tikz}
+\usetikzlibrary{matrix,decorations.pathreplacing,calc}
 
 \usepackage{needspace}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -119,3 +121,16 @@
   {\end{small}}
 
 \makeatother
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+% Repeat environment
+\newenvironment{bis}
+  {\ignorespaces\tikzmark{1b}}
+  {\tikzmark{rright}\tikzmark{1e}
+   \begin{tikzpicture}[overlay, remember picture]
+      \draw [decoration={brace,amplitude=0.5em},decorate,gray]
+      ($(rright)!(1b.north)!($(rright)-(0,1)$)$)
+      -- node[black, right=0.7em] {x2}
+      ($(rright)!(1e.south)!($(rright)-(0,1)$)$);
+    \end{tikzpicture}
+  }%
