@@ -12,39 +12,42 @@
             {{ form.non_field_errors }}
             <div>
                 {{ form.title.errors }}
-                {{ form.title.label_tag }}: {{ form.title }}
+                <label for="id_title">Tytuł:</label> {{ form.title }}
             </div>
             <div>
                 {{ form.author.errors }}
-                {{ form.author.label_tag }}: {{ form.author }}
+                <label for="id_author">Autor:</label> {{ form.author }}
             </div>
             <div>
                 {{ form.date.errors }}
-                {{ form.date.label_tag }}: {{ form.date }}
+                <label for="id_date">Data:</label> {{ form.date }}
             </div>
             {{ form.song_ids.as_hidden }}
             {{ form.song_ids.errors }}
             <div id="library">
-                <h2>Library:</h2>
-                <span class="sort ui-state-default ui-corner-all" data-sort="title">Sort by title</span>
-                <span class="sort ui-state-default ui-corner-all" data-sort="firstwords">Sort by firstwords</span>
-                <input class="search" data-columns='title'/>
+                <h3>Biblioteka:</h3>
+                <div class="list-controls">
+                    <span class="sort ui-state-default ui-corner-all" data-sort="title">Sortuj</span>
+                    <input class="search" data-columns='title'/>
+                </div>
                 <ul id="library-list" class="list">
                     {% for song in all_songs %}
                         <li class="ui-state-default" data-id='{{ song.pk }}'>
-                            <span class="title">{{ song.title }}</span></br>
-                            <span class="firstwords">First words {% if forloop.counter|divisibleby:"3" %}a{% endif %}{{ forloop.counter }}</span>
+                            <span class="title">{{ song.title }}</span>
+                            <a href="{% url song pk=song.pk %}" target="_blank" class="ui-icon ui-icon-info song-details-button"></a>
                         </li>
                     {%endfor%}
                 </ul>
             </div>
             <div id="songbook">
-                <h2>Songbook:</h2>
+                <h3>Śpiewnik:</h3>
+                <div class="list-controls"></div>
                 <ol id="songbook-list">
                 </ol>
             </div>
             <div class="clear"></div>
-            <input type='submit' value='Zapisz' class='button'>
+            <input type='submit' value='Zapisz' class='button save'>
+            <div class="clear"></div>
         </form>
     </div>
 {% endblock %}
