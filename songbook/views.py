@@ -12,16 +12,18 @@ from django.views import generic
 from django.views.generic import detail
 
 from songbook import models
-
+from songbook import forms
 
 class SongListView(generic.ListView):
     model = models.Song
 
 class SongUpdateView(generic.UpdateView):
     model = models.Song
+    form_class = forms.SongForm
 
 class SongCreateView(generic.CreateView):
     model = models.Song
+    form_class = forms.SongForm
 
 class SongDetailView(generic.DetailView):
     model = models.Song
