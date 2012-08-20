@@ -12,6 +12,7 @@
 \RequirePackage{ifthen}
 \RequirePackage{tikz}
 \usetikzlibrary{matrix,decorations.pathreplacing,calc}
+\RequirePackage{uniquecounter}
 
 \usepackage{needspace}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -103,7 +104,7 @@
     \vspace{0.4in}
     \settowidth{\versewidth}{\commandkey{longestline}} 
     \ifnotzero{\commandkey{multicol}}{
-      \setlength{\columnsep}{0pt}
+      \setlength{\columnsep}{2em}
       \begin{multicols}{2}
     }
     \begin{verse}[\versewidth]
@@ -122,18 +123,53 @@
 
 \makeatother
 
-\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
 % Repeat environment
+
+\newcommand\bisinfo{\textit{$\times2$}}
+
+\UniqueCounterNew{bis}
+\newcommand{\tikzmarktop}[1]{\tikz[overlay,remember picture] \node (#1) at ++(0,0.25\baselineskip) {};}
+\newcommand{\tikzmarkbottom}[1]{\tikz[overlay,remember picture] \node (#1) at ++(0,-0.1\baselineskip){};}
+\newcommand{\tikzmarkright}[1]{\tikz[overlay,remember picture] \node (#1) at ++(\versewidth + 1ex, 0) {};}
+
 \newenvironment{bis}
   {%
-    \tikzmark{rright}%
-    \tikzmark{1b}}%
-  {%
-   \tikzmark{1e}
-   \begin{tikzpicture}[overlay, remember picture]
-      \draw [decoration={brace,amplitude=0.5em},decorate,gray]
-      ($($(rright)+(\versewidth,0)$)!(1b.north)!($($(rright)+(\versewidth,0)$)-(0,1)$)$)
-      -- node[black, right=0.7em] {x2}
-      ($($(rright)+(\versewidth,0)$)!(1e.south)!($($(rright)+(\versewidth,0)$)-(0,1)$)$);
-    \end{tikzpicture}
+    \tikzmarkright{rright\UniqueCounterGet{bis}}%
+    \tikzmarktop{bb\UniqueCounterGet{bis}}%
   }%
+  {%
+   \tikzmarkbottom{be\UniqueCounterGet{bis}}
+   \begin{tikzpicture}[overlay, remember picture]
+      \draw [decoration={brace,amplitude=0.3em},decorate,gray]
+      ($($(rright\UniqueCounterGet{bis})$)!(bb\UniqueCounterGet{bis}.north)!($($(rright\UniqueCounterGet{bis})$)$)$)
+      -- node[black, right=0.7em] {\bisinfo}
+      ($($(rright\UniqueCounterGet{bis})$)!(be\UniqueCounterGet{bis})!($($(rright\UniqueCounterGet{bis})$)$)$);
+    \end{tikzpicture}
+    \UniqueCounterIncrement{bis}
+  }%
+
+
+\newcommand{\linebis}[1]
+{%
+  \tikz[overlay, remember picture] \node (n1){};%
+  {#1}
+  \tikz[overlay]
+  \draw node (n3) at (n1.east) {maciek};% 
+  %\UniqueCounterIncrement{bis}%
+}
+
+% Chorus environment
+\newcommand{\chorusflag}{\flagverse{\small\textsc{Ref.}}}
+\newcommand{\chorusflagskip}{1em}
+\setlength{\vleftskip}{\chorusflagskip}
+\newkeyenvironment{chorus}[bool nobis=false]
+{%
+  \chorusflag%
+  \begin{bis}%
+}%
+{%
+  \end{bis}%
+}
+\newcommand{\chorusfirstline}{\PackageError{songbook}{chorusfirstwords macro should be used first!}}
+\newcommand{\chorusref}{\chorusflag\chorusfirstline\ldots}
+\newcommand\chorusfirstwords[1]{#1\xdef\chorusfirstline{#1}}

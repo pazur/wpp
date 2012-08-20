@@ -22,100 +22,6 @@
 \maketitle
 \setlipsumdefault{1}
 
-
-
-
-
-\begin{lyrics}
-  
-  Maciek \\
-  Maciek \\
-  Maciek \\
-  Maciek
-  
-  The first line. \\
-  \vin \flagverse{Ref.} The second line. \tikzmark{2nd} \\
-  A very long third line that goes on. \\
-  A fourth line. \\
-  And finally a last line. \tikzmark{4th}\\
-  maffa
-  \hspace{\versewidth}\tikzmark{righta}
-
-  The first line. \\
-  \flagverse{Ref.} The second line. \\
-  A very long third line that goes on. \\
-  \tikzmark{2nd}A fourth line. \\
-  And finally a last line. \tikzmark{4th}
-  \hspace{\versewidth}\tikzmark{rightb}
-  \begin{tikzpicture}[overlay, remember picture]
-    \draw [decoration={brace,amplitude=0.5em},decorate,gray]
-    ($(righta)!(2nd.north)!($(righta)-(0,1)$)$) -- node[black, right=0.7em] {x2}  ($(righta)!(4th.south)!($(righta)-(0,1)$)$);
-  \end{tikzpicture}
-
-  The first line. \\
-  \flagverse{Ref.} line. \\
-  A very long third \\
-  \tikzmark{m2nd}A fourth line. \\
-  And finally line. \tikzmark{m4th}
-  \hspace{\versewidth}\tikzmark{rightb}
-  \begin{tikzpicture}[overlay, remember picture]
-    \draw [decoration={brace,amplitude=0.5em},decorate,gray]
-    ($(righta)!(m2nd.north)!($(righta)-(0,1)$)$) -- node[black, right=0.7em] {x2}  ($(righta)!(m4th.south)!($(righta)-(0,1)$)$);
-  \end{tikzpicture}
-  
-  Maciek \\ 
-  Maciek \\
-  Maciek
-\end{lyrics}
-
-
-
-
-
-
-
-
-\begin{lyrics}[longestline={A very long third line that goes on.}]
-\begin{tikzpicture}
-  \matrix (m) [matrix of nodes,column 1/.style={anchor=west}]
-    {  
-    The first line. \\
-    The second line. \\
-    A very long third line that goes on. \\
-    A fourth line. \\
-    And finally a last line. \\
-    maffa \\
-    
-    \vspace{1in}
-    
-    The first line. \\
-    The second line. \\
-    A very long third line that goes on. \\
-    A fourth line. \\
-    And finally a last line. \\
-    };
-
-    \draw [decoration={brace,amplitude=0.7em},decorate,gray]
-        (m-2-1.north -| m.east) -- node[black, right=0.7em] {x2} (m-3-1.south -| m.east);
-\end{tikzpicture}
-
-\begin{tikzpicture}
-  \matrix (m) [matrix of nodes,column 1/.style={anchor=west}]
-    {  
-    The first line. \\
-    The second line. \\
-    A very long third line that goes on. \\
-    A fourth line. \\
-    And finally a last line. \\
-    };
-
-    \draw [decoration={brace,amplitude=0.7em},decorate,gray]
-        (m-2-1.north -| m.east) -- node[black, right=0.7em] {x2} (m-3-1.south -| m.east);
-\end{tikzpicture}
-
-
-\end{lyrics}
-
 \song[alt=Pieśń Legionów Polskich we Włoszech,
       lyrics=Józef Wybicki,
       lyricsyear=1797]
@@ -136,37 +42,36 @@
   \begin{lyrics}
     \firstwords{Jeszcze Polska nie zginęła},\\
     Kiedy my żyjemy.\\
-    Co nam obca przemoc wzięła,\\
+    \linebis{Co nam obca przemoc wzięła,}\\
     Szablą odbierzemy.
-
     
-    \flagverse{Ref.}Marsz, marsz, Dąbrowski,\\
-    \begin{bis}%
+    \begin{chorus}
+      \chorusfirstwords{Marsz, marsz, Dąbrowski},\\
       Z ziemi włoskiej do Polski.\\
       Za twoim przewodem\\
-      Złączym się z narodem.%
-    \end{bis}
+      Złączym się z narodem.
+    \end{chorus}
     
     Przejdziem Wisłę, przejdziem Wartę,\\
     Będziem Polakami.\\
     Dał nam przykład Bonaparte,\\
     Jak zwyciężać mamy.
-      
-    Marsz, marsz, Dąbrowski...
-
+    
+    \chorusref
+    
     Jak Czarniecki do Poznania\\
     Po szwedzkim zaborze,\\
     Dla ojczyzny ratowania\\
     Wrócim się przez morze.
-    
-    Marsz, marsz, Dąbrowski...
+        
+    \chorusref
 
     Już tam ojciec do swej Basi\\
-    Mówi zapłakany —\\
+    Mówi zapłakany --\\
     Słuchaj jeno, pono nasi\\
     Biją w tarabany.
 
-    Marsz, marsz, Dąbrowski...
+    \chorusref
   \end{lyrics}
 
 
@@ -182,46 +87,46 @@
     Co nam obca moc wydarła,\\
     szablą odbijemy.
     
-    \flagverse{Ref.}Marsz, marsz, Dąbrowski\\
+    \begin{chorus}
+    \chorusfirstwords{Marsz, marsz, Dąbrowski}\\
     do Polski z ziemi włoski\\
     za Twoim przewodem\\
     złączem się z narodem.
+    \end{chorus}%
     
     Jak Czarnecki do Poznania\\
     wracał się przez morze\\
     dla ojczyzny ratowania\\
     po szwedzkim rozbiorze.
     
-    Marsz, marsz, Dąbrowski...
-    
+    \chorusref
     
     Przejdziem Wisłę przejdziem Wartę\\*
     będziem Polakami\\*
     dał nam przykład Bonaparte\\*
     jak zwyciężać mamy.\\*
     
-    Marsz, marsz, Dąbrowski...
+    \chorusref
     
     Niemiec, Moskal nie osiędzie,\\
     gdy jąwszy pałasza,\\
     hasłem wszystkich zgoda będzie\\
     i ojczyzna nasza.
 
-    Marsz, marsz, Dąbrowski...
+    \chorusref
 
     Już tam ojciec do swej Basi\\
     mówi zapłakany:\\
     ,,słuchaj jeno, pono nasi\\
     biją w tarabany.''
 
-    Marsz, marsz, Dąbrowski...
+    \chorusref
 
     Na to wszystkich jedne głosy:\\
     ,,Dosyć tej niewoli\\
     mamy Racławickie Kosy,\\
     Kościuszkę, Bóg pozwoli.''
   \end{lyrics}
-
   
 \song[lyrics=Mieczysław Kozar-Słobódzki,
       lyricsyear= ok. 1914,
@@ -232,28 +137,27 @@
     \lipsum[1]
   \end{info}
   \setlength{\vgap}{10pt}
-  \begin{lyrics}
+  \begin{lyrics}[longestline={Gdy z wojenki wrócisz do dziewczyny twej?}]
     \firstwords{Rozkwitały pąki białych róż}.\\
     Wróć Jasieńku, z tej wojenki już!\\
-    \vin Wróć! ucałuj jak za dawnych lat,\\
-    \vin Dam ci za to róży najpiękniejszy kwiat! \emph{(x2)}
-    %Wróć! ucałuj jak za dawnych lat,\\
-    %Dam ci za to róży najpiękniejszy kwiat!
+    \begin{bis}%
+      Wróć! ucałuj jak za dawnych lat,\\
+      Dam ci za to róży najpiękniejszy kwiat!
+    \end{bis}
     
     Przekwitały pąki białych róż.\\
     Przeszło lato, jesień, zima już.\\
-    Cóż ci teraz dam Jasieńku hej,\\
-    Gdy z wojenki wrócisz do dziewczyny twej?\\
-    
-    Cóż ci teraz dam Jasieńku hej,\\
-    Gdy z wojenki wrócisz do dziewczyny twej?
+    \begin{bis}%
+      Cóż ci teraz dam Jasieńku hej,\\
+      Gdy z wojenki wrócisz do dziewczyny twej?
+    \end{bis}
     
     Jasieńkowi nic nie potrza już,\\
     Bo mu kwitną nowe pąki róż,\\
-    Tam nad jarem, gdzie w wojence padł\\
-    Rozkwitł u mogiły białej róży kwiat.\\
-    Tam nad jarem, gdzie w wojence padł\\
-    Rozkwitł u mogiły białej róży kwiat.\\
+    \begin{bis}%
+      Tam nad jarem, gdzie w wojence padł\\
+      Rozkwitł u mogiły białej róży kwiat.
+    \end{bis}
   \end{lyrics}
 
 \song{Pierwsza brygada}
