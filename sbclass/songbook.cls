@@ -115,7 +115,9 @@
     \ifnotzero{\commandkey{multicol}}{
       \end{multicols}
     }
-}
+    %Invalidate chorusfirstline
+    %\xdef\chorusfirstline{\PackageError{songbook}{chorusfirstwords macro should be used first!}}
+  }
 
 \newenvironment{info}
   {\begin{small}}
@@ -125,14 +127,14 @@
 
 % Repeat environment
 
-\newcommand\bisinfo{\textit{$\times2$}}
+\newcommand\defaultmark{\textit{$\times2$}}
 
 \UniqueCounterNew{bis}
 \newcommand{\tikzmarktop}[1]{\tikz[overlay,remember picture] \node (#1) at ++(0,0.25\baselineskip) {};}
 \newcommand{\tikzmarkbottom}[1]{\tikz[overlay,remember picture] \node (#1) at ++(0,-0.1\baselineskip){};}
 \newcommand{\tikzmarkright}[1]{\tikz[overlay,remember picture] \node (#1) at ++(\versewidth + 1ex, 0) {};}
 
-\newenvironment{bis}
+\newkeyenvironment{markverses}[marktext=\defaultmark]
   {%
     \tikzmarkright{rright\UniqueCounterGet{bis}}%
     \tikzmarktop{bb\UniqueCounterGet{bis}}%
@@ -142,20 +144,20 @@
    \begin{tikzpicture}[overlay, remember picture]
       \draw [decoration={brace,amplitude=0.3em},decorate,gray]
       ($($(rright\UniqueCounterGet{bis})$)!(bb\UniqueCounterGet{bis}.north)!($($(rright\UniqueCounterGet{bis})$)$)$)
-      -- node[black, right=0.7em] {\bisinfo}
+      -- node[black, right=0.7em] {\commandkey{marktext}}
       ($($(rright\UniqueCounterGet{bis})$)!(be\UniqueCounterGet{bis})!($($(rright\UniqueCounterGet{bis})$)$)$);
     \end{tikzpicture}
     \UniqueCounterIncrement{bis}
   }%
 
 
-\newcommand{\linebis}[1]
+\newkeycommand{\markverse}[marktext=\defaultmark][1]
 {%
-  \tikz[overlay, remember picture] \node (n1){};%
-  {#1}
-  \tikz[overlay]
-  \draw node (n3) at (n1.east) {maciek};% 
-  %\UniqueCounterIncrement{bis}%
+  \tikz[overlay, remember picture] \node (rright\UniqueCounterGet{bis}) at ++(\versewidth + 2em,0){};%
+  {#1}%
+  \tikz[overlay, remember picture]%
+  \draw node (n3) at (rright\UniqueCounterGet{bis}.center) {\emph{\commandkey{marktext}}};% 
+  \UniqueCounterIncrement{bis}%
 }
 
 % Chorus environment
@@ -165,10 +167,10 @@
 \newkeyenvironment{chorus}[bool nobis=false]
 {%
   \chorusflag%
-  \begin{bis}%
+  \begin{markverses}%
 }%
 {%
-  \end{bis}%
+  \end{markverses}%
 }
 \newcommand{\chorusfirstline}{\PackageError{songbook}{chorusfirstwords macro should be used first!}}
 \newcommand{\chorusref}{\chorusflag\chorusfirstline\ldots}
