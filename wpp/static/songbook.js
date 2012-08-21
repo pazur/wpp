@@ -38,11 +38,13 @@ $(function() {
             var id = $(this).parent().data('id')
             $(this).parent().remove();
             countInSongbook(id);
+            return false;
         });
     }
 
     function appendToSongbook(node, skipCounting){
         if (!node.find('.delete-button').length){
+            node.find('.song-details-button').remove();
             node.append($('<a href="#" class="ui-icon ui-icon-trash delete-button"></a>'));
             addDeleteButtonClick(node);
             if(!skipCounting)
@@ -53,7 +55,7 @@ $(function() {
 
     function initListJs(){
         var options = {
-            valueNames: ['title', 'firstwords']
+            valueNames: ['title']
         };
 
         var library = new List('library', options);
@@ -82,6 +84,7 @@ $(function() {
         appendToSongbook(node);
     });
     $('.button').button();
+    $('#id_date').datepicker({dateFormat: 'dd.mm.yy'});
     initListJs();
 });
 

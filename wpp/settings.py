@@ -74,3 +74,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/tmp/wpp-static'
 
 LOGIN_URL='/login/'
+LOGIN_REDIRECT_URL = '/'

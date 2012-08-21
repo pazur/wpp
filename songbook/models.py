@@ -1,5 +1,8 @@
+from django.core import exceptions
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.template.loader import render_to_string
+from yapps import runtime
 
 from songbook.export import Exporter, HtmlExporter
 from songbook import fields
@@ -38,9 +41,18 @@ class Song(models.Model):
     def __long__(self):
         return long(self.pk)
 
+    def clean(self):
+        super(Song, self).clean()
+        try:
+            Exporter(self).export()
+        except runtime.SyntaxError:
+            raise exceptions.ValidationError('Lyrics source is not compiling')
+
 class SongBook(models.Model):
     title = models.CharField(max_length=255)
     song_ids = fields.SongListField(models.ForeignKey(Song))
+    author = models.CharField(max_length=255, blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
         return self.title
@@ -52,3 +64,6 @@ class SongBook(models.Model):
 
     def get_absolute_url(self):
         return reverse('songbook', kwargs={'pk': self.pk})
+
+    def latex_preview(self):
+        return render_to_string('songbook.tex', {'songbook': self})

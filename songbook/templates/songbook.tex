@@ -1,0 +1,29 @@
+{% autoescape off %}
+\documentclass[12pt,a4paper,twoside]{songbook}
+
+\usepackage{t1enc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[width=15cm]{geometry}
+
+\usepackage{layout} % DEBUGGING, TESTING
+\usepackage{lipsum} % DEBUGGING, TESTING
+
+\makeindex{fwidx}
+\makeindex{titidx}
+
+\title{ {{ songbook.title }} }
+{% if songbook.date %}\date{ {{ songbook.date|date:"j E Y" }} }{% endif %}
+{% if songbook.author %}\author{ {{songbook.author}} }{% endif %}
+\begin{document}
+\maketitle
+\setlipsumdefault{1}
+
+{% for song in songbook.songs %}{{ song.latex_preview }}
+{% endfor %}
+
+\printindex{titidx}{Piosenki wg tytułów}
+\printindex{fwidx}{Piosenki wg pierwszych słów}
+\end{document}
+{% endautoescape %}

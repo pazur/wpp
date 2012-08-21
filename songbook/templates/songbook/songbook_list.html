@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block page_title %}Lista śpiewników{% endblock %}
 {% block content %}
+    <div class="songs-list">
     <ul>
         {% for object in object_list %}
             <li><a href='{% url songbook pk=object.pk%}'>{{ object }}</a></li>
         {% endfor %}
     </ul>
+    </div>
 {% endblock %}
