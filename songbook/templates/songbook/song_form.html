@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block page_title %}{% if object %}{{ object.title }} - edycja{% else %}Dodaj piosenkę{% endif %}{% endblock %}
 {% block content %}
+    {% if not object %}
     <div id="import" class="ui-state-highlight ui-corner-all">
         <h3>Importuj z <a href="http://bibilotekapiosenki.pl/">bibliotekapiosenki.pl</a></h3>
         <form action="." method="post">
@@ -15,6 +16,7 @@
         </form>
         <div class="clear"></div>
     </div>
+    {% endif %}
     <div class="content-wrapper">
         <form method="post" action=".">
             {% csrf_token %}
