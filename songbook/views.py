@@ -11,8 +11,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
 from django.views.generic import detail
 
+from importer import bibliotekapiosenki
 from songbook import models
 from songbook import forms
+
 
 class SongListView(generic.ListView):
     model = models.Song
@@ -25,8 +27,45 @@ class SongCreateView(generic.CreateView):
     model = models.Song
     form_class = forms.SongForm
 
+    def get_importer_for_url(self, url):
+        if urlparse.urlparse(url).netloc.endswith('bibliotekapiosenki.pl'):
+            return bibliotekapiosenki.SongImporter
+        return None
+
+    def normalize_url(self, url):
+        parsed = urlparse.urlparse(url)
+        if not parsed.scheme:
+            url = u'http://' + url
+        return url
+
+    def post(self, request, *args, **kwargs):
+        if 'src_url' in request.POST:
+            url = self.normalize_url(request.POST['src_url'])
+            importer = self.get_importer_for_url(url)
+            try:
+                version = int(request.POST.get('src_version', 1))
+            except ValueError:
+                version = 1
+            if importer:
+                data = importer(url, version).get()
+                mapping = {
+                    'lyrics': 'lyrics',
+                    'title': 'title',
+                    'subtitle': 'alt_title',
+                    'music_author': 'music_author',
+                    'lyrics_author': 'lyrics_author',
+                    'year': 'lyrics_year',
+                    'info': 'info',
+                    }
+                self.initial = dict((mapping[key], data[key]) for key in mapping)
+            request.method = 'get'
+            return super(SongCreateView, self).get(request, *args, **kwargs)
+        return super(SongCreateView, self).post(request, *args, **kwargs)
+
+
 class SongDetailView(generic.DetailView):
     model = models.Song
+
 
 class LatexView(detail.SingleObjectMixin, generic.View):
     def get(self, request, *args, **kwargs):
@@ -34,17 +73,21 @@ class LatexView(detail.SingleObjectMixin, generic.View):
         latex = object.latex_preview()
         return http.HttpResponse(latex, mimetype='text/plain; charset=utf-8')
 
+
 class AllSongsMixin(object):
     def get_context_data(self, **kwargs):
         context = super(AllSongsMixin, self).get_context_data(**kwargs)
         context['all_songs'] = models.Song.objects.all()
         return context
 
+
 class SongbookUpdateView(AllSongsMixin, generic.UpdateView):
     model = models.SongBook
 
+
 class SongbookCreateView(AllSongsMixin, generic.CreateView):
     model = models.SongBook
+
 
 class SongBookLatexHashView(LatexView):
     http_method_names = ['post']
@@ -56,6 +99,7 @@ class SongBookLatexHashView(LatexView):
         if hash != expected:
             raise exceptions.PermissionDenied
         return self.get(request, *args, **kwargs)
+
 
 class SongbookDetailView(generic.DetailView):
     model = models.SongBook
