@@ -11,7 +11,8 @@ class SongImporter(object):
         src = conn.read()
         conn.close()
         self.version = version - 1
-        self.soup = bs4.BeautifulSoup(src)
+        self.soup = bs4.BeautifulSoup(src, 'lxml')
+        self.errors = []
 
     def get(self):
         return {
@@ -55,7 +56,7 @@ class SongImporter(object):
             if 'object_color' not in node.attrs.get('class', []):
                 return node.children.next()
         except (AttributeError, StopIteration):
-                return None
+            return None
 
     def get_first_from_left_sidebar(self, text):
         try:

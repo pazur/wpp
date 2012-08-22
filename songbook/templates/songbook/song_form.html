@@ -4,6 +4,9 @@
     {% if not object %}
     <div id="import" class="ui-state-highlight ui-corner-all">
         <h3>Importuj z <a href="http://bibliotekapiosenki.pl/">bibliotekapiosenki.pl</a></h3>
+        {% if extra_context.import_errors %}
+            <div class='errorlist'>{% for e in extra_context.import_errors %}<p>{{ e }}</p>{% endfor %}</div>
+        {% endif %}
         <form action="." method="post">
             {% csrf_token %}
             <div>

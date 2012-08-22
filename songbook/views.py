@@ -10,6 +10,7 @@ from django import http
 from django.views.decorators.csrf import csrf_exempt
 from django.views import generic
 from django.views.generic import detail
+from django.utils import simplejson
 
 from importer import bibliotekapiosenki
 from songbook import models
@@ -41,13 +42,14 @@ class SongCreateView(generic.CreateView):
     def post(self, request, *args, **kwargs):
         if 'src_url' in request.POST:
             url = self.normalize_url(request.POST['src_url'])
-            importer = self.get_importer_for_url(url)
+            importer_cls = self.get_importer_for_url(url)
             try:
                 version = int(request.POST.get('src_version', 1))
             except ValueError:
                 version = 1
-            if importer:
-                data = importer(url, version).get()
+            if importer_cls:
+                importer = importer_cls(url, version)
+                data = importer.get()
                 mapping = {
                     'lyrics': 'lyrics',
                     'title': 'title',
@@ -58,10 +60,18 @@ class SongCreateView(generic.CreateView):
                     'info': 'info',
                     }
                 self.initial = dict((mapping[key], data[key]) for key in mapping)
+                if importer.errors:
+                    self.extra_context = {'import_errors': importer.errors}
+            else:
+                self.extra_context = {'import_errors': ('Cannot find importer for url',)}
             request.method = 'get'
             return super(SongCreateView, self).get(request, *args, **kwargs)
         return super(SongCreateView, self).post(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(SongCreateView, self).get_context_data(**kwargs)
+        context['extra_context'] = getattr(self, 'extra_context', None)
+        return context
 
 class SongDetailView(generic.DetailView):
     model = models.Song
