@@ -10,22 +10,14 @@ class Lexem(object):
             self.verse = verse.strip()
             self.chords = chords.strip()
 
-        def to_latex(self, context):
-            result = self.verse
-            while context['verse']['first']:
-                transformation = context['verse']['first'].pop(0)
-                result = transformation(result)
-            for transformation in context['verse']['all']:
-                result = transformation(result)
-            if len(context['verse']['longest']) < len(self):
-                context['verse']['longest'] = self.verse
-            return result
-
         def to_html(self, context):
             return escape(self.verse)
 
         def __len__(self):
             return len(self.verse)
+
+        def accept(self, visitor):
+            visitor.visit_verse(self)
 
     class Pipe(Verse):
         type = 'PIPE'
@@ -36,6 +28,9 @@ class Lexem(object):
         def __init__(self, verse, text, chords=''):
             super(Lexem.PipeText, self).__init__(verse, chords)
             self.text = text.strip()
+
+        def accept(self, visitor):
+            visitor.visit_pipe_text(self)
 
     class EOF(object):
         type = 'EOF'
