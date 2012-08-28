@@ -65,9 +65,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % INDICES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newcommand{\firstwords}{\@ifstar%
+                     \firstwordsStar%
+                     \firstwordsNoStar%
+}
+\makeatother
 
-\newcommand{\firstwords}[1]{
-  \ignorespaces#1\index{fwidx}{#1}\ignorespacesafterend
+\newcommand{\firstwordsNoStar}[1]{%
+  \ignorespaces#1\index{fwidx}{#1}\ignorespacesafterend%
+}
+\newcommand{\firstwordsStar}[1]{%
+  \ignorespaces\index{fwidx}{#1}\ignorespacesafterend%
 }
 \newcommand{\indexheader}[1]{\large\textbf{#1}}
 
