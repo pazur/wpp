@@ -1,0 +1,50 @@
+\documentclass[a4paper,twoside,noinfo,frontmatter]{songbook}
+
+\usepackage{t1enc}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[body={15cm,22cm},headsep=.5in,voffset=.5in]{geometry}
+
+\usepackage{layout} % DEBUGGING, TESTING
+\usepackage{lipsum} % DEBUGGING, TESTING
+
+\makeindex{fwidx}
+\makeindex{titidx}
+
+\usepackage{graphicx}
+\begin{document}
+
+\begin{front}
+\begin{titlepage}
+\begin{center}
+  {\VERYHUGE \bfseries\textsc{Śpiewnik}}
+
+  \vspace{0.2in}
+  {\Huge\bfseries na}
+  \vspace{0.2in}
+  
+  {\HUGE\bfseries wieczory pieśni patriotycznej}
+\end{center}
+\vspace{0.5in}
+\begin{center}
+  \includegraphics[width=3in]{img/godlo-small.png}
+\end{center}
+\vspace{0.55in}
+\begin{center}
+  {\Huge\bfseries 23 września 2012}
+\end{center}
+\end{titlepage}
+
+\begin{dedication}
+  Kochanemu Tacie\\
+  z okazji 50. urodzin
+\end{dedication}
+\end{front}
+
+\input{songs.tex}
+
+\printindex{titidx}{Piosenki wg tytułów}
+\printindex{fwidx}{Piosenki wg pierwszych słów}
+
+\end{document}

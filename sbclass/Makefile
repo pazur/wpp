@@ -1,9 +1,10 @@
-DOC ?= example.tex
+DOC ?= songbook.tex
 OUTDIR ?= .
 
 TARGET = $(subst .tex,,$(DOC))
 
 CLASS=songbook.cls
+SONGS=songs.tex
 INDICES=fwidx.ind titidx.ind
 INDEXSTYLE=index.ist
 
@@ -13,7 +14,7 @@ LATEX=TEXINPUTS='.:$(EXT_CLASS_DIR);' pdflatex
 
 all: $(TARGET)
 
-$(TARGET): $(DOC) $(CLASS) $(INDICES)
+$(TARGET): $(DOC) $(SONGS) $(CLASS) $(INDICES)
 	$(LATEX) -jobname $(TARGET) -output-directory $(OUTDIR) $(DOC)
 
 %.ind : %.idx

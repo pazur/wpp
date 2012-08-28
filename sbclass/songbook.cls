@@ -169,7 +169,7 @@
    \begin{tikzpicture}[overlay, remember picture]%
       \draw [decoration={brace,amplitude=0.3em},decorate,gray]%
       ($($(rright\UniqueCounterGet{bis})$)!(bb\UniqueCounterGet{bis}.north)!($($(rright\UniqueCounterGet{bis})$)$)$)%
-      -- node[black, right=0.7em] {\commandkey{marktext}}%
+      -- node[black, right=0.7em] {\emph{\commandkey{marktext}}}%
       ($($(rright\UniqueCounterGet{bis})$)!(be\UniqueCounterGet{bis})!($($(rright\UniqueCounterGet{bis})$)$)$);%
     \end{tikzpicture}%
     \UniqueCounterIncrement{bis}%
