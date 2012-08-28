@@ -13,6 +13,16 @@ class Exporter(object):
         parser = grammar.Lyrics(lexer.Lexer(self.song.lyrics))
         return parser.entry()
 
+    def parse_footnotes(self, value):
+        footnote = ''
+        text = value
+        split = value.split(u'|', 1)
+        if len(split) == 2:
+            text, note = split
+            if note.strip():
+                footnote = u'\\footnote{%s}' % note.strip()
+        return text.strip() + footnote
+
     def get_params(self):
         mapping = {
             'lyrics_author': 'lyrics',
@@ -25,7 +35,7 @@ class Exporter(object):
         for key in mapping:
             value = getattr(self.song, key)
             if value:
-                result[mapping[key]] = value
+                result[mapping[key]] = self.parse_footnotes(value)
         if not result:
             return ''
         return '[%s]' % ','.join('%s={%s}' % item for item in result.iteritems())
