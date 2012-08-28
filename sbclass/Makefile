@@ -23,4 +23,4 @@ $(TARGET): $(DOC) $(CLASS) $(INDICES)
 	$(LATEX) $(DOC)
 
 clean:
-	rm -fr *.dvi *.pdf *.log *.aux *.idx *.ind *.ilg *.mtc *.mtc0 *.maf
+	rm -fr *.dvi *.pdf *.log *.aux *.idx *.ind *.ilg *.mtc *.mtc0 *.maf comment.cut

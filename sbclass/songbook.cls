@@ -1,8 +1,18 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{songbook}[2012/05/10 Songbook class]
 \LoadClass{book}
-
 \usepackage[utf8]{inputenc}
+
+\newif\ifprintfront
+\printfronttrue
+\DeclareOption{nofrontmatter}{\printfrontfalse}
+
+\def\iinfo{1}
+
+\newif\ifprintinfo
+\printinfotrue
+\DeclareOption{noinfo}{\printinfofalse\gdef\iinfo{0}}
+\ProcessOptions
 
 \RequirePackage{verse}
 \RequirePackage{keycommand}
@@ -13,9 +23,11 @@
 \RequirePackage{tikz}
 \usetikzlibrary{matrix,decorations.pathreplacing,calc}
 \RequirePackage{uniquecounter}
+\RequirePackage{comment}
+\RequirePackage{environ}
+\RequirePackage[perpage,symbol*]{footmisc}
 
-\usepackage{needspace}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % VARIOUS UTILS, METACOMMANDS, ETC.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,8 +54,11 @@
 \makeatother
 \newcommand{\ifckey}[2]{\ifcommandkey{#1}{#2}{}}
 
-\newcommand{\ifnotzero}[2]{
-  \ifthenelse{\equal{#1}{0}}{}{#2}
+\newcommand{\ifzero}[2]{%
+  \ifthenelse{\equal{#1}{0}}{#2}{}%
+}
+\newcommand{\ifnotzero}[2]{%
+  \ifthenelse{\equal{#1}{0}}{}{#2}%
 }
 
 
@@ -65,7 +80,7 @@
 % want to adjust the songbook to their specific needs (e.g. langauge)
 \newcommand\songlyrics{Słowa}
 \newcommand\songmusic{Muzyka}
-\newcommand\unknown{Nieznany}
+\newcommand\unknown{nieznany}
 \newcommand\songdefaultline{L o r e m i p s u m, lorem lorem ipsum}
 \newcommand{\stanzabreak}[1][0.1in]{ \vspace{#1}}
 
@@ -98,6 +113,12 @@
     \vspace{0.2in}
   }
 
+\NewEnviron{info}{
+  \ifprintinfo
+  {\BODY}
+  \fi
+}
+  
 \newkeyenvironment{lyrics}[bool multicol=false,longestline=\songdefaultline]
   {
     \let\par\stanzabreak
@@ -116,17 +137,12 @@
       \end{multicols}
     }
     %Invalidate chorusfirstline
-    %\xdef\chorusfirstline{\PackageError{songbook}{chorusfirstwords macro should be used first!}}
+    \gdef\chorusfirstline{\PackageError{songbook}{chorusfirstwords macro should be used first}}
   }
-
-\newenvironment{info}
-  {\begin{small}}
-  {\end{small}}
 
 \makeatother
 
-% Repeat environment
-
+% Mark environment
 \newcommand\defaultmark{\textit{$\times2$}}
 
 \UniqueCounterNew{bis}
@@ -140,23 +156,25 @@
     \tikzmarktop{bb\UniqueCounterGet{bis}}%
   }%
   {%
-   \tikzmarkbottom{be\UniqueCounterGet{bis}}
-   \begin{tikzpicture}[overlay, remember picture]
-      \draw [decoration={brace,amplitude=0.3em},decorate,gray]
-      ($($(rright\UniqueCounterGet{bis})$)!(bb\UniqueCounterGet{bis}.north)!($($(rright\UniqueCounterGet{bis})$)$)$)
-      -- node[black, right=0.7em] {\commandkey{marktext}}
-      ($($(rright\UniqueCounterGet{bis})$)!(be\UniqueCounterGet{bis})!($($(rright\UniqueCounterGet{bis})$)$)$);
-    \end{tikzpicture}
-    \UniqueCounterIncrement{bis}
+   \tikzmarkbottom{be\UniqueCounterGet{bis}}%
+   \begin{tikzpicture}[overlay, remember picture]%
+      \draw [decoration={brace,amplitude=0.3em},decorate,gray]%
+      ($($(rright\UniqueCounterGet{bis})$)!(bb\UniqueCounterGet{bis}.north)!($($(rright\UniqueCounterGet{bis})$)$)$)%
+      -- node[black, right=0.7em] {\commandkey{marktext}}%
+      ($($(rright\UniqueCounterGet{bis})$)!(be\UniqueCounterGet{bis})!($($(rright\UniqueCounterGet{bis})$)$)$);%
+    \end{tikzpicture}%
+    \UniqueCounterIncrement{bis}%
   }%
 
-
+% Mark one line (no braces)
 \newkeycommand{\markverse}[marktext=\defaultmark][1]
 {%
   \tikz[overlay, remember picture] \node (rright\UniqueCounterGet{bis}) at ++(\versewidth + 2em,0){};%
   {#1}%
   \tikz[overlay, remember picture]%
-  \draw node (n3) at (rright\UniqueCounterGet{bis}.center) {\emph{\commandkey{marktext}}};% 
+  \draw node[right] (n3) at (rright\UniqueCounterGet{bis}.west){%
+  {\emph{\commandkey{marktext}}}%
+  };% 
   \UniqueCounterIncrement{bis}%
 }
 
@@ -164,14 +182,60 @@
 \newcommand{\chorusflag}{\flagverse{\small\textsc{Ref.}}}
 \newcommand{\chorusflagskip}{1em}
 \setlength{\vleftskip}{\chorusflagskip}
-\newkeyenvironment{chorus}[bool nobis=false]
+\newkeyenvironment*{chorus}[bool mark=true]%
 {%
   \chorusflag%
-  \begin{markverses}%
+  \ifnotzero{\commandkey{mark}}%
+  {\begin{markverses}}%
 }%
 {%
-  \end{markverses}%
+  \ifnotzero{\commandkey{mark}}{\end{markverses}}%
 }
 \newcommand{\chorusfirstline}{\PackageError{songbook}{chorusfirstwords macro should be used first!}}
 \newcommand{\chorusref}{\chorusflag\chorusfirstline\ldots}
 \newcommand\chorusfirstwords[1]{#1\xdef\chorusfirstline{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FRONTMATTER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\oldfrontmatter\frontmatter
+\renewcommand{\frontmatter}{%
+\oldfrontmatter\pagestyle{empty}
+}
+
+\let\oldmainmatter\mainmatter
+\renewcommand{\mainmatter}{
+\oldmainmatter\pagestyle{headings}
+}
+
+\specialcomment{front}{\frontmatter}{\mainmatter}
+\ifprintfront
+  \includecomment{front}
+\else
+  \excludecomment{front}
+\fi
+
+\newenvironment{dedication}
+{
+   \pagestyle{empty}\cleardoublepage
+   \thispagestyle{empty}
+   \vspace*{0.8\textheight}
+   \hfill\begin{minipage}[t]{0.35\textwidth}
+   \raggedright\LARGE\it
+}%
+{
+   \end{minipage}
+   \cleardoublepage
+}
+
+\makeatletter
+\newcommand\VERYHUGE{\@setfontsize\Huge{80}{100}}
+\newcommand\HUGE{\@setfontsize\Huge{50}{70}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MISC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setfnsymbol{wiley}

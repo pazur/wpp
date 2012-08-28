@@ -1,33 +1,53 @@
-\documentclass[12pt,a4paper,twoside]{songbook}
+\documentclass[a4paper,twoside,noinfo,nofrontmatter]{songbook}
 
 \usepackage{t1enc}
 \usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
 
-\usepackage[width=15cm]{geometry}
+\usepackage[body={15cm,22cm},headsep=.5in,voffset=.5in]{geometry}
 
 \usepackage{layout} % DEBUGGING, TESTING
 \usepackage{lipsum} % DEBUGGING, TESTING
-\usepackage{tikz}
-
 
 \makeindex{fwidx}
 \makeindex{titidx}
 
-\title{Śpiewnik}
-\date{23 września 2012}
-\author{Magda \and Tomek \and Maciek}
-
+\usepackage{graphicx}
 \begin{document}
-\maketitle
-\setlipsumdefault{1}
 
-\song[alt=Pieśń Legionów Polskich we Włoszech,
-      lyrics=Józef Wybicki,
-      lyricsyear=1797]
+\begin{front}
+\begin{titlepage}
+\begin{center}
+  {\VERYHUGE \bfseries\textsc{Śpiewnik}}
+
+  \vspace{0.2in}
+  {\Huge\bfseries na}
+  \vspace{0.2in}
+  
+  {\HUGE\bfseries wieczory pieśni patriotycznej}
+\end{center}
+\vspace{0.5in}
+\begin{center}
+  \includegraphics[width=3in]{img/godlo-small.png}
+\end{center}
+\vspace{0.55in}
+\begin{center}
+  {\Huge\bfseries 23 września 2012}
+\end{center}
+\end{titlepage}
+
+\begin{dedication}
+  Kochanemu Tacie\\
+  z okazji 50. urodzin
+\end{dedication}
+\end{front}
+
+\song[alt=Pieśń Legionów Polskich we Włoszech\footnote{To oryginalny tytuł},
+lyrics={Józef Wybicki\footnote{Blabla}},
+      lyricsyear={1797\footnote{Ale tak do końca nie wiadomo}}]
       {Mazurek Dąbrowskiego}
 
-  \begin{info}
+\begin{info}
     Pierwotnie hymn, jako Pieśń Legionów Polskich we Włoszech, został
     napisany przez Józefa Wybickiego. Autor melodii opartej na motywach
     ludowego mazurka (właściwie mazura) jest nieznany.
@@ -37,25 +57,27 @@
     Włoszech). Pierwszy raz została wykonana publicznie 20 lipca 1797
     roku[3]. Tekst ogłoszono po raz pierwszy w Mantui w lutym 1799
     w~gazetce "Dekada Legionowa".
-  \end{info}
-  
+\end{info}
+
   \begin{lyrics}
     \firstwords{Jeszcze Polska nie zginęła},\\
     Kiedy my żyjemy.\\
     \markverse{Co nam obca przemoc wzięła,}\\
     Szablą odbierzemy.
     
-    \begin{chorus}
+    \begin{chorus}%
       \chorusfirstwords{Marsz, marsz, Dąbrowski},\\
       Z ziemi włoskiej do Polski.\\
       Za twoim przewodem\\
       Złączym się z narodem.
     \end{chorus}
     
+    \begin{markverses}[marktext=costam]%
     Przejdziem Wisłę, przejdziem Wartę,\\
     Będziem Polakami.\\
     Dał nam przykład Bonaparte,\\
     Jak zwyciężać mamy.
+    \end{markverses}
     
     \chorusref
     
@@ -75,10 +97,11 @@
   \end{lyrics}
 
 
+
 \song{Mazurek Dąbrowskiego}
-  \begin{info}
+\begin{info}
     \lipsum
-  \end{info}
+\end{info}
 
   
   \begin{lyrics}[multicol=true, longestline=Przejdziem Wisłę przejdziem Wartę]
@@ -128,18 +151,18 @@
     Kościuszkę, Bóg pozwoli.''
   \end{lyrics}
   
-\song[lyrics=Mieczysław Kozar-Słobódzki,
+\song[lyrics={Mieczysław Kozar-Słobódzki\footnote{Coś tam dłuższego}},
       lyricsyear= ok. 1914,
       music=Kazimierz Wroczyński
 ]{Białe róże}
 
-  \begin{info}
+\begin{info}
     \lipsum[1]
-  \end{info}
+\end{info}
   
   \begin{lyrics}[longestline={Gdy z wojenki wrócisz do dziewczyny twej?}]
     \firstwords{Rozkwitały pąki białych róż}.\\
-    Wróć Jasieńku, z tej wojenki już!\\
+    Wróć Jasieńku, z tej wojenki już!\\    
     \begin{markverses}[marktext={powtórzcie to ludzie}]%
       Wróć! ucałuj jak za dawnych lat,\\
       Dam ci za to róży najpiękniejszy kwiat!
@@ -162,9 +185,9 @@
 
 \song{Pierwsza brygada}
 
-  \begin{info}
+\begin{info}
     \lipsum[1]
-  \end{info}
+\end{info}
 
   \begin{lyrics}[longestline=Legiony to straceńców los]
   \firstwords{Legiony to żołnierska nuta}, \\
@@ -178,124 +201,6 @@
   Swój życia los,\\
   Na stos, na stos!
   \end{lyrics}
-
-
-
- \firstwords{Suspendisse potenti}
-\firstwords{Duis ullamcorper}
-\firstwords{euismod turpis}
-\firstwords{sit amet}
-\firstwords{tristique Fusce}
-\firstwords{ac elit}
-\firstwords{eu leo}
-\firstwords{auctor hendrerit}
-\firstwords{Mauris a}
-\firstwords{odio lacus}
-\firstwords{Fusce tincidunt}
-\firstwords{libero non}
-\firstwords{dolor luctus}
-\firstwords{nec commodo}
-\firstwords{enim mollis}
-\firstwords{Class aptent}
-\firstwords{taciti sociosqu}
-\firstwords{ad litora}
-\firstwords{torquent per}
-\firstwords{conubia nostra}
-\firstwords{per inceptos}
-\firstwords{himenaeos Proin}
-\firstwords{elementum aliquet}
-\firstwords{leo Quisque}
-\firstwords{vulputate enim}
-\firstwords{non ante}
-\firstwords{elementum euismod}
-\firstwords{Praesent nisl}
-\firstwords{quam facilisis}
-\firstwords{et sodales}
-\firstwords{blandit pellentesque}
-\firstwords{non risus}
-\firstwords{Nulla facilisi}
-\firstwords{Maecenas at}
-\firstwords{dui quam}
-\firstwords{eu imperdiet}
-\firstwords{nunc Praesent}
-\firstwords{mauris erat}
-\firstwords{pretium a}
-\firstwords{lacinia hendrerit}
-\firstwords{porttitor ut}
-\firstwords{arcu Vestibulum}
-\firstwords{ante ipsum}
-\firstwords{primis in}
-\firstwords{faucibus orci}
-\firstwords{luctus et}
-\firstwords{ultrices posuere}
-\firstwords{cubilia Curae}
-\firstwords{Class aptent}
-\firstwords{taciti sociosqu}
-\firstwords{ad litora}
-\firstwords{torquent per}
-\firstwords{conubia nostra}
-\firstwords{per inceptos}
-\firstwords{himenaeos Integer}
-\firstwords{nulla arcu}
-\firstwords{tristique in}
-\firstwords{pellentesque nec}
-\firstwords{luctus ut}
-\firstwords{lacus}
-\firstwords{}
-\firstwords{Maecenas}
-\firstwords{tortor nulla}
-\firstwords{fermentum nec}
-\firstwords{lacinia at}
-\firstwords{venenatis at}
-\firstwords{nisi Vivamus}
-\firstwords{ac commodo}
-\firstwords{sem Mauris}
-\firstwords{eu ligula}
-\firstwords{sed tortor}
-\firstwords{sollicitudin hendrerit}
-\firstwords{ut id}
-\firstwords{sem Aenean}
-\firstwords{ultricies fermentum}
-\firstwords{facilisis Nulla}
-\firstwords{facilisi In}
-\firstwords{scelerisque eros}
-\firstwords{et leo}
-\firstwords{pellentesque laoreet}
-\firstwords{Morbi tempus}
-\firstwords{dignissim convallis}
-\firstwords{Quisque ornare}
-\firstwords{turpis at}
-\firstwords{convallis mollis}
-\firstwords{diam lorem}
-\firstwords{tincidunt turpis}
-\firstwords{a malesuada}
-\firstwords{purus nisi}
-\firstwords{nec arcu}
-\firstwords{Duis mollis}
-\firstwords{sem ac}
-\firstwords{velit auctor}
-\firstwords{convallis Suspendisse}
-\firstwords{accumsan cursus}
-\firstwords{aliquet Fusce}
-\firstwords{suscipit hendrerit}
-\firstwords{augue sit}
-\firstwords{amet vulputate}
-\firstwords{Vivamus urna}
-\firstwords{mauris sagittis}
-\firstwords{vehicula sodales}
-\firstwords{at laoreet}
-\firstwords{vitae dolor}
-\firstwords{Praesent interdum}
-\firstwords{dignissim diam}
-\firstwords{nec porta}
-\firstwords{felis blandit}
-\firstwords{in Cum}
-\firstwords{sociis natoque}
-\firstwords{penatibus et}
-\firstwords{magnis dis}
-\firstwords{parturient montes nascetur ridiculus mus}
-\firstwords{Exegi monumentum aere perennius}
-\firstwords{Longum titlum longeli titli longus longus longus}
 
 \printindex{titidx}{Piosenki wg tytułów}
 \printindex{fwidx}{Piosenki wg pierwszych słów}
