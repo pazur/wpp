@@ -72,6 +72,7 @@ class Lexer(yapps.Scanner):
                 return result[:-1]
         if not line.strip():
             return Lexem.Empty(),
+        line = line.replace(u'"', "''")
         verse, chords = (line.split(CHORDS_SEPARATOR, 1) + [''])[:2]
         if not PIPE in verse:
             return Lexem.Verse(verse, chords),
