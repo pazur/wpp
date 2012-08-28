@@ -66,7 +66,7 @@
 % INDICES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
-\newcommand{\firstwords}{\@ifstar%
+\newcommand{\firstwords}{\gdef\firstwordsmarked{1}\@ifstar%
                      \firstwordsStar%
                      \firstwordsNoStar%
 }
@@ -147,6 +147,8 @@
     }
     %Invalidate chorusfirstline
     \gdef\chorusfirstline{\PackageError{songbook}{chorusfirstwords macro should be used first}}
+    %Invalidate firstwordsmark
+    \gdef\firstwordsmarked{0}
   }
 
 \makeatother
@@ -202,7 +204,10 @@
 }
 \newcommand{\chorusfirstline}{\PackageError{songbook}{chorusfirstwords macro should be used first!}}
 \newcommand{\chorusref}{\chorusflag\chorusfirstline\ldots}
-\newcommand\chorusfirstwords[1]{#1\xdef\chorusfirstline{#1}}
+\newcommand\chorusfirstwords[1]{%
+  \ifzero{\firstwordsmarked}{\firstwords*{#1}}%
+  #1\xdef\chorusfirstline{#1}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FRONTMATTER
