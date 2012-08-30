@@ -89,7 +89,7 @@
 % want to adjust the songbook to their specific needs (e.g. langauge)
 \newcommand\songlyrics{Słowa}
 \newcommand\songmusic{Muzyka}
-\newcommand\unknown{nieznany}
+\newcommand\unknown{autor nieznany}
 \newcommand\songdefaultline{L o r e m i p s u m, lorem lorem ipsum}
 \newcommand{\stanzabreak}[1][0.1in]{ \vspace{#1}}
 
@@ -105,10 +105,18 @@
 {\small\begin{flushright}\em #1}
   {\end{flushright}}
 
+
+\newcommand*\cleartoleftpage{%
+  \clearpage
+  \ifodd\value{page}\hbox{}\newpage\fi
+}
+
+
 % These are main environments and commands to be used in songbooks
-\newkeycommand{\song}[alt={},lyrics=\unknown,music=\unknown,lyricsyear={},musicyear={}][1]
+\newkeycommand{\song}[alt={},lyrics=\unknown,music=\unknown,lyricsyear={},musicyear={},bool beginonleft=false][1]
   {
-    \newpage
+    \ifzero{\commandkey{beginonleft}}{\newpage}
+    \ifnotzero{\commandkey{beginonleft}}{\cleartoleftpage}
     \song@title{#1}
     \index{titidx}{#1}
     \ifckey{alt}{\song@alttitle{\commandkey{alt}}}
@@ -180,12 +188,8 @@
 % Mark one line (no braces)
 \newkeycommand{\markverse}[marktext=\defaultmark][1]
 {%
-  \tikz[overlay, remember picture] \node (rright\UniqueCounterGet{bis}) at ++(\versewidth + 2em,0){};%
+  \tikz[overlay, remember picture] \node[anchor=base] at ++(\versewidth + 2.1em,0){\emph{\commandkey{marktext}}};%
   {#1}%
-  \tikz[overlay, remember picture]%
-  \draw node[right] (n3) at (rright\UniqueCounterGet{bis}.west){%
-  {\emph{\commandkey{marktext}}}%
-  };% 
   \UniqueCounterIncrement{bis}%
 }
 
@@ -209,6 +213,14 @@
   #1\xdef\chorusfirstline{#1}%
 }
 
+%Indented environment
+\newenvironment{indented}
+  {%
+    \addtolength{\leftmargini}{-14em}%
+  }
+  {%
+    \addtolength{\leftmargini}{14em}%
+  }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FRONTMATTER
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
