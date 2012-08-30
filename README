@@ -1,3 +1,79 @@
+DO MADZI:
+
+Projekt przechodzi do fazy finalnej. Zwracamy uwagę
+na wszystkie detale:
+
+   -- pisownię (w szczególności wielkie-małe litery)
+   -- interpunkcję (warto także pod jej kątem przeglądać warianty piosenek)
+   -- dane o piosenkach
+
+1. Uwagi typograficzne 
+
+1.1 Żeby wygenerować prawdziwe polskie cudzysłowy piszemy tak: 
+
+    ,,Coś w cudzysłowie'' ,,Coś innego''
+
+Zaczynający to dwa przecinki, kończący to dwa apostrofy. Nie używamy
+znaczków ". Pod żadnym pozorem!
+
+1.2 Żeby napisać myślnik, piszemy -- (dwie krótkie kreski po sobie).
+
+2. Metainformacje o piosenkach
+Jeśli mamy jakieś dodatkowe informacje, piszemy je po pionowej kresce (|).
+Pojawią się wtedy w przypisie dolnym. Może to wyglądać np. tak:
+
+	Maciej Pazurkiewicz | Niektórzy autorzy podają, że w tworzeniu piosenki
+	brała udział także Magdalena Pazurkiewicz.
+
+
+3. Piosenki do dodania
+
+Rota
+Serce w plecaku
+Żurawiejki na pułki kawalerii
+Szumi dokoła las (Oka)
+
+DO TOMASZA
+
+1. Bisy i inne znaczki
+
+1.1 Proponowałbym, żeby ustalić domyślny znak powtórzenia (np. bis) i
+jeśli w czystym tekście, ktoś by go wpisał (ew. nie wpisał nic), to w
+parametrze marktext nic nie byłoby wstawiane i generowałby się domyślny --
+ładnie złożony itp.
+
+Generalnie pewnie byłoby to jakieś "x2" (tylko z prawdziwym razy), imho
+lepiej odcina się od tekstu niż "bis".
+
+2 Są piosenki długie, które będą na dwóch stronach. Dodałem do makra
+\song parametr beginonleft, wtedy taka piosenka będzie się zaczynała
+na lewej stronie i będzie w całości widoczna.
+
+   a) Dodajemy parametr w systemie? Czy sami będziemy sobie to
+   oznaczać w wygenerowanym Latexu?
+
+   b) Trzeba będzie zwracać uwagę, żeby tak ułożyć piosenki, żeby nie było
+   pustych kartek przed długimi piosenkami.
+
+   c) Długim piosenkom trzeba będzie może ręcznie wskazać miejsce
+   podziału strony, żeby było ładnie.
+
+3 Czasem chciałbym wstawić do metainformacji jakieś formatowanie
+(np. wyróżnić tytuły kursywą), w HTML-u potem to brzydko wygląda.
+Może chcesz parsować napisy typu: "autor /Wielkiego Śpiewnika/ ..."
+i zamieniać je na <i>...</i> bądź "\textit{...}"
+
+
+
+
+
+
+
+
+
+
+
+
 * How to use gen.pl?
 
 1. Place sbclass and gen.pl on the server (don't forget about setting
