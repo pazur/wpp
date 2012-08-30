@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 {% block page_title %}{% if object %}{{ object.title }} - edycja{% else %}Dodaj piosenkę{% endif %}{% endblock %}
 {% block content %}
+    {% if not object %}
+    <div id="import" class="ui-state-highlight ui-corner-all">
+        <h3>Importuj z <a href="http://bibliotekapiosenki.pl/">bibliotekapiosenki.pl</a></h3>
+        {% if extra_context.import_errors %}
+            <div class='errorlist'>{% for e in extra_context.import_errors %}<p>{{ e }}</p>{% endfor %}</div>
+        {% endif %}
+        <form action="." method="post">
+            {% csrf_token %}
+            <div>
+                <label for="id_src_url">Źródło:</label><input type="text" name="src_url" id="id_src_url">
+            </div>
+            <div>
+                <label for="id_src_version">Wariant:</label><input type="text" name="src_version" id="id_src_version" maxlength="2">
+            </div>
+            <input type='submit' value='importuj' class='button save'>
+        </form>
+        <div class="clear"></div>
+    </div>
+    {% endif %}
     <div class="content-wrapper">
         <form method="post" action=".">
             {% csrf_token %}

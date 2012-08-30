@@ -145,6 +145,31 @@ div.ui-datepicker{
 }
 
 /* song add */
+
+#import {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+#import h3 {
+    text-align: center;
+}
+#import form div {
+    float: left;
+}
+
+#id_src_url {
+    width: 200px;
+    margin-right: 10px;
+    margin-top: 8px;
+}
+
+#id_src_version {
+    width: 50px;
+    margin-top: 8px;
+}
+
+
 input, textarea {
     border-radius: 4px;
     border: 2px inset #cccccc;

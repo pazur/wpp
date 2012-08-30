@@ -1,9 +1,8 @@
-from collections import defaultdict
 from yapps import runtime
 
 from django.utils.html import escape
 
-from songbook.export import grammar, lexer
+from songbook.export import grammar, lexer, songtree
 
 class Exporter(object):
     def __init__(self, song):
@@ -12,6 +11,16 @@ class Exporter(object):
     def parse_lyrics(self):
         parser = grammar.Lyrics(lexer.Lexer(self.song.lyrics))
         return parser.entry()
+
+    def parse_footnotes(self, value):
+        footnote = ''
+        text = value
+        split = value.split(u'|', 1)
+        if len(split) == 2:
+            text, note = split
+            if note.strip():
+                footnote = u'\\footnote{%s}' % note.strip()
+        return text.strip() + footnote
 
     def get_params(self):
         mapping = {
@@ -25,7 +34,7 @@ class Exporter(object):
         for key in mapping:
             value = getattr(self.song, key)
             if value:
-                result[mapping[key]] = value
+                result[mapping[key]] = self.parse_footnotes(value)
         if not result:
             return ''
         return '[%s]' % ','.join('%s={%s}' % item for item in result.iteritems())
@@ -38,8 +47,9 @@ class Exporter(object):
 
     def get_lyrics(self):
         tree = self.parse_lyrics()
-        context = defaultdict(lambda: defaultdict(list))
-        return tree.to_latex(context)
+        visitor = songtree.Visitor()
+        tree.accept(visitor)
+        return visitor.get_output()
 
     def export(self):
         params = self.get_params()
