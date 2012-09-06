@@ -18,10 +18,13 @@ $(TARGET): $(DOC) $(SONGS) $(CLASS) $(INDICES)
 	$(LATEX) -jobname $(TARGET) -output-directory $(OUTDIR) $(DOC)
 
 %.ind : %.idx
-	makeindex -s $(INDEXSTYLE) $<
+	texindy -L polish -M lang/polish/utf8 $<
 
 %.idx: $(DOC)
 	$(LATEX) $(DOC)
 
 clean:
 	rm -fr *.dvi *.pdf *.log *.aux *.idx *.ind *.ilg *.mtc *.mtc0 *.maf comment.cut
+
+.PHONY: clean
+.SECONDARY:

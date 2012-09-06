@@ -1,17 +1,15 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{songbook}[2012/05/10 Songbook class]
-\LoadClass{book}
+\LoadClass[12pt]{book}
 \usepackage[utf8]{inputenc}
 
 \newif\ifprintfront
 \printfronttrue
 \DeclareOption{nofrontmatter}{\printfrontfalse}
 
-\def\iinfo{1}
-
 \newif\ifprintinfo
 \printinfotrue
-\DeclareOption{noinfo}{\printinfofalse\gdef\iinfo{0}}
+\DeclareOption{noinfo}{\printinfofalse}
 \ProcessOptions
 
 \RequirePackage{verse}
@@ -91,18 +89,18 @@
 \newcommand\songmusic{Muzyka}
 \newcommand\unknown{autor nieznany}
 \newcommand\songdefaultline{L o r e m i p s u m, lorem lorem ipsum}
-\newcommand{\stanzabreak}[1][0.1in]{ \vspace{#1}}
+\newcommand{\defaultstanzabreak}[1][0.1in]{ \vspace{#1}}
 
 % These should be treaten rather as package internals
 \makeatletter
 \newcommand{\song@title}[1] {
-  {\noindent\Huge\bfseries #1 \index{titidx}{#1}\par}
+  {\noindent\huge\bfseries #1 \index{titidx}{#1}\par}
 }
 \newcommand{\song@alttitle}[1]{
-  {\noindent \Large #1 \par}
+  {\noindent \large #1 \par}
 }
 \newenvironment{song@infobox}[1]
-{\small\begin{flushright}\em #1}
+{\footnotesize\begin{flushright}\em #1}
   {\end{flushright}}
 
 
@@ -127,7 +125,7 @@
       \songmusic: \commandkey{music}\ifckey{musicyear}{ (\commandkey{musicyear})}
     \end{song@infobox}
     
-    \vspace{0.2in}
+    \vspace{0.20in}
   }
 
 \NewEnviron{info}{
@@ -136,10 +134,12 @@
   \fi
 }
   
-\newkeyenvironment{lyrics}[bool multicol=false,longestline=\songdefaultline]
+\newkeyenvironment{lyrics}[bool multicol=false,
+                           bool vcenter=true,
+                           longestline=\songdefaultline]
   {
-    \let\par\stanzabreak
-    \vspace{0.4in}
+    \ifnotzero{\commandkey{vcenter}}{\vfill}
+    \let\par\defaultstanzabreak
     \settowidth{\versewidth}{\commandkey{longestline}} 
     \ifnotzero{\commandkey{multicol}}{
       \setlength{\columnsep}{2em}
@@ -153,25 +153,35 @@
     \ifnotzero{\commandkey{multicol}}{
       \end{multicols}
     }
-    %Invalidate chorusfirstline
+    \ifnotzero{\commandkey{vcenter}}{\vfill}
+    % Invalidate chorusfirstline
     \gdef\chorusfirstline{\PackageError{songbook}{chorusfirstwords macro should be used first}}
     %Invalidate firstwordsmark
     \gdef\firstwordsmarked{0}
   }
-
 \makeatother
 
+\newkeycommand{\breaklyrics}[bool vcenter=true]{%
+    \ifnotzero{\commandkey{vcenter}}{\vspace*{\fill}}%
+    \newpage%
+    \ifnotzero{\commandkey{vcenter}}{\vspace*{\fill}}%
+  }
 % Mark environment
-\newcommand\defaultmark{\textit{$\times2$}}
-
+\newcommand\defaultmark{\textit{($\times2$)}}
+\newlength{\markpos}
 \UniqueCounterNew{bis}
 \newcommand{\tikzmarktop}[1]{\tikz[overlay,remember picture] \node (#1) at ++(0,0.25\baselineskip) {};}
 \newcommand{\tikzmarkbottom}[1]{\tikz[overlay,remember picture] \node (#1) at ++(0,-0.1\baselineskip){};}
 \newcommand{\tikzmarkright}[1]{\tikz[overlay,remember picture] \node (#1) at ++(\versewidth + 1ex, 0) {};}
+\newcommand{\tikzmarkrightnoalign}[2]{\settowidth{\markpos}{#2}\tikz[overlay,remember picture] \node (#1) at ++(\markpos + 1ex, 0) {};}
 
-\newkeyenvironment{markverses}[marktext=\defaultmark]
+\newkeyenvironment{markverses}[marktext=\defaultmark,atwidthof={}]%
   {%
-    \tikzmarkright{rright\UniqueCounterGet{bis}}%
+    \ifcommandkey{atwidthof}{%
+      \tikzmarkrightnoalign{rright\UniqueCounterGet{bis}}{\commandkey{atwidthof}}%
+      }{%
+        \tikzmarkright{rright\UniqueCounterGet{bis}}%
+      }%
     \tikzmarktop{bb\UniqueCounterGet{bis}}%
   }%
   {%
@@ -186,9 +196,11 @@
   }%
 
 % Mark one line (no braces)
-\newkeycommand{\markverse}[marktext=\defaultmark][1]
+\newkeycommand{\markverse}[marktext=\defaultmark, bool noalign=false][1]
 {%
-  \tikz[overlay, remember picture] \node[anchor=base] at ++(\versewidth + 2.1em,0){\emph{\commandkey{marktext}}};%
+  \setlength{\markpos}{\versewidth}
+  \ifnotzero{\commandkey{noalign}}{\settowidth\markpos{#1}}
+  \tikz[overlay, remember picture] \node[anchor=base] at ++(\markpos + 2.1em,0){\emph{\commandkey{marktext}}};%
   {#1}%
   \UniqueCounterIncrement{bis}%
 }
@@ -265,3 +277,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \setfnsymbol{wiley}
+
+\renewcommand\smallskip{\vspace{2.2pt}}
+\setlength{\vgap}{0.8em}

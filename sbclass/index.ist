@@ -5,6 +5,6 @@ delim_0 "\\dotfill"
 
 headings_flag 1
 heading_prefix "\\indexheader{"
-heading_suffix "}\\vspace{3pt}"
+heading_suffix "}\\nopagebreak\\vspace{3pt}"
 
 
