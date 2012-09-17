@@ -25,7 +25,7 @@
 \RequirePackage{environ}
 \RequirePackage[perpage,symbol*]{footmisc}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % VARIOUS UTILS, METACOMMANDS, ETC.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -167,7 +167,12 @@
     \ifnotzero{\commandkey{vcenter}}{\vspace*{\fill}}%
   }
 % Mark environment
-\newcommand\defaultmark{\textit{($\times2$)}}
+\definecolor{darkgray}{RGB}{90,90,90}
+  
+\newcommand\defaultmarktext{$\times2$}
+\newcommand\markstyle{\color{darkgray}\scriptsize}
+\newcommand\defaultmark{\color{darkgray}\scriptsize\defaultmarktext}
+\newcommand\defaultmarkparen{\color{darkgray}\scriptsize(\defaultmarktext)}
 \newlength{\markpos}
 \UniqueCounterNew{bis}
 \newcommand{\tikzmarktop}[1]{\tikz[overlay,remember picture] \node (#1) at ++(0,0.25\baselineskip) {};}
@@ -187,7 +192,7 @@
   {%
    \tikzmarkbottom{be\UniqueCounterGet{bis}}%
    \begin{tikzpicture}[overlay, remember picture]%
-      \draw [decoration={brace,amplitude=0.3em},decorate,gray]%
+      \draw [decoration={brace,amplitude=0.3em},decorate,darkgray]%
       ($($(rright\UniqueCounterGet{bis})$)!(bb\UniqueCounterGet{bis}.north)!($($(rright\UniqueCounterGet{bis})$)$)$)%
       -- node[black, right=0.7em] {\emph{\commandkey{marktext}}}%
       ($($(rright\UniqueCounterGet{bis})$)!(be\UniqueCounterGet{bis})!($($(rright\UniqueCounterGet{bis})$)$)$);%
@@ -196,11 +201,11 @@
   }%
 
 % Mark one line (no braces)
-\newkeycommand{\markverse}[marktext=\defaultmark, bool noalign=false][1]
+\newkeycommand{\markverse}[marktext=\defaultmarkparen, bool noalign=false][1]
 {%
   \setlength{\markpos}{\versewidth}
   \ifnotzero{\commandkey{noalign}}{\settowidth\markpos{#1}}
-  \tikz[overlay, remember picture] \node[anchor=base] at ++(\markpos + 2.1em,0){\emph{\commandkey{marktext}}};%
+  \tikz[overlay, remember picture] \node[anchor=base] at ++(\markpos + 2.1em,1pt){\emph{\commandkey{marktext}}};%
   {#1}%
   \UniqueCounterIncrement{bis}%
 }
@@ -209,7 +214,7 @@
 \newcommand{\chorusflag}{\flagverse{\small\textsc{Ref.}}}
 \newcommand{\chorusflagskip}{1em}
 \setlength{\vleftskip}{\chorusflagskip}
-\newkeyenvironment*{chorus}[bool mark=true]%
+\newkeyenvironment*{chorus}[bool mark=false]%
 {%
   \chorusflag%
   \ifnotzero{\commandkey{mark}}%
@@ -278,5 +283,6 @@
 
 \setfnsymbol{wiley}
 
-\renewcommand\smallskip{\vspace{2.2pt}}
+\renewcommand\smallskip{\vspace{2.4pt}}
+\renewcommand\medskip{\vspace{5pt}}
 \setlength{\vgap}{0.8em}

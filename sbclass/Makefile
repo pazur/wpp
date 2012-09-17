@@ -4,7 +4,7 @@ OUTDIR ?= .
 TARGET = $(subst .tex,,$(DOC))
 
 CLASS=songbook.cls
-SONGS=songs.tex
+SONGS=songs3.tex
 INDICES=fwidx.ind titidx.ind
 INDEXSTYLE=index.ist
 
