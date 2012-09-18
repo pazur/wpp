@@ -78,6 +78,9 @@
 }
 \newcommand{\indexheader}[1]{\large\textbf{#1}}
 
+\let\oldindexspace\indexspace
+
+\renewcommand\indexspace{\oldindexspace\pagebreak[1]}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % SONGS
@@ -97,7 +100,7 @@
   {\noindent\huge\bfseries #1 \index{titidx}{#1}\par}
 }
 \newcommand{\song@alttitle}[1]{
-  {\noindent \large #1 \par}
+  {\noindent \large #1 \index{titidx}{#1}\par }
 }
 \newenvironment{song@infobox}[1]
 {\footnotesize\begin{flushright}\em #1}
@@ -264,13 +267,15 @@
    \pagestyle{empty}\cleardoublepage
    \thispagestyle{empty}
    \vspace*{0.8\textheight}
-   \hfill\begin{minipage}[t]{0.35\textwidth}
+   \hfill\begin{minipage}[t]{0.4\textwidth}
    \raggedright\LARGE\it
 }%
 {
    \end{minipage}
    \cleardoublepage
 }
+
+\usepackage{anyfontsize}
 
 \makeatletter
 \newcommand\VERYHUGE{\@setfontsize\Huge{80}{100}}
@@ -286,3 +291,5 @@
 \renewcommand\smallskip{\vspace{2.4pt}}
 \renewcommand\medskip{\vspace{5pt}}
 \setlength{\vgap}{0.8em}
+
+\newcommand{\intertitle}[1]{\textsc{#1}}

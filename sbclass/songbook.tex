@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside,noinfo,nofrontmatter]{songbook}
+\documentclass[a4paper,twoside,noinfo,frontmatter]{songbook}
 
 \usepackage{t1enc}
 \usepackage[polish]{babel}
@@ -13,6 +13,8 @@
 \makeindex{titidx}
 
 \usepackage{graphicx}
+\usepackage{url}
+
 \begin{document}
 
 \begin{front}
@@ -44,7 +46,22 @@
 
 \input{songs3.tex}
 
+\cleartoleftpage
 \printindex{titidx}{Piosenki wg tytułów}
+\cleartoleftpage
 \printindex{fwidx}{Piosenki wg pierwszych słów}
+
+\section*{Źródła}
+
+Teksty piosenek oraz informacje o nich pochodzą z następujących serwisów internetowych:
+\begin{description}
+  \setlength{\itemsep}{-1pt}
+  \item[Wikipedia] -- \url{http://pl.wikipedia.org}
+  \item[Wikiźródła] -- \url{http://pl.wikisources.org}
+  \item[Biblioteka piosenki] -- \url{http://www.bibliotekapiosenki.org}
+\end{description}
+
+\noindent Spośród wielu wariantów pieśni staraliśmy się -- w miarę możliwości --
+wybierać te najbardziej popularne.
 
 \end{document}
