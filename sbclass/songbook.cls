@@ -289,7 +289,7 @@
 \setfnsymbol{wiley}
 
 \renewcommand\smallskip{\vspace{2.4pt}}
-\renewcommand\medskip{\vspace{5pt}}
+\renewcommand\medskip{\vspace{4pt}}
 \setlength{\vgap}{0.8em}
 
 \newcommand{\intertitle}[1]{\textsc{#1}}
