@@ -80,7 +80,7 @@
 
 \let\oldindexspace\indexspace
 
-\renewcommand\indexspace{\oldindexspace\pagebreak[1]}
+\renewcommand\indexspace{\oldindexspace\vspace{4pt}\pagebreak[3]}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 % SONGS
