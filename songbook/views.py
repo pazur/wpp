@@ -108,6 +108,9 @@ class SongBookLatexHashView(LatexView):
         expected = hmac.new(settings.LATEX_SECRET, request.build_absolute_uri()).hexdigest()
         if hash != expected:
             raise exceptions.PermissionDenied
+        if 'songs_only' in self.request.POST:
+            songbook = self.get_object()
+            return http.HttpResponse(u'\n\n'.join(song.latex_preview() for song in songbook.songs))
         return self.get(request, *args, **kwargs)
 
 
