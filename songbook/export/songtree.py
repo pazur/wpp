@@ -9,7 +9,7 @@ class Group(object):
         self.verses = verses
 
     def to_html(self, context):
-        verses = '</br>'.join(v.to_html(context) for v in self.verses)
+        verses = '<br>'.join(v.to_html(context) for v in self.verses)
         text = escape(self.verses[-1].text)
         return '<span class="verse-group">%s</span><span>%s</span>' % (verses, text)
 
@@ -31,7 +31,7 @@ class Stanza(object):
         self.parts = parts
 
     def to_html(self, context):
-        return '<p>%s</p>' % ('</br>'.join(p.to_html(context) for p in self.parts))
+        return '<p>%s</p>' % ('<br>'.join(p.to_html(context) for p in self.parts))
 
     def accept(self, visitor):
         visitor.visit_stanza_enter(self)
